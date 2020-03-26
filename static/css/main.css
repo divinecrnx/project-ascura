@@ -61,9 +61,9 @@ body {
     align-items: center;
 }
 
-#logo {
-    /* float: left; */
-}
+/* #logo {
+    float: left;
+} */
 
 #right-h-content {
     width: 250px;
