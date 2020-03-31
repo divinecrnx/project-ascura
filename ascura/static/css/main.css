@@ -4,6 +4,12 @@
     /* color: #fff; */
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: unset;
+}
+
 @font-face {
     font-family: Proxima-Bold;
     src: url(../proxima_ssv/Proxima\ Nova\ Bold.otf);
@@ -185,27 +191,27 @@ button.commend {
     width: 100px;
 }
 
-#jumbotron {
+#jumbotron-custom {
     height: 80vh;
     width: 100%;
     padding-top: 100px;
 }
 
-#jumbowrapper {
+#jumbowrapper-custom {
     padding: 100px 15%;
 }
 
-#jumbo-logo {
+#jumbo-logo-custom {
     width: 450px;
     display: flex;
     justify-content: space-between;
 }
 
-#jumbo-logo > img {
+#jumbo-logo-custom > img {
     width: 100px;
 }
 
-#jumbo-logo > h1 {
+#jumbo-logo-custom > h1 {
     color: #fff;
     font-size: 60pt;
 }

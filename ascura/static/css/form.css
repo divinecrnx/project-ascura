@@ -1,0 +1,25 @@
+#main-form-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+#register-form-div {
+    width: 1200px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    background-color: #1d1d44;
+    padding: 50px 35px;
+    border: 1px solid #1d1d44;
+    border-radius: 5px;
+}
+
+fieldset {
+    border: 4px solid #fff;
+    border-radius: 5px;
+}
+
+.form-control-group {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-around; */
+}
