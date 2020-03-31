@@ -71,7 +71,7 @@ class Faculty(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1)
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     short_desc = db.Column(db.String(70), nullable=False, default="Hi there, I'm new to Ascura.")
-    long_desc = db.Column(db.Text, nullable=False, default="This user has not specified additional information.")
+    long_desc = db.Column(db.Text, nullable=False, default="No information given.")
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     posts = db.relationship('FPost', backref='author', lazy=True)
@@ -89,8 +89,8 @@ class Student(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1) # Done
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False) # Done
     short_desc = db.Column(db.String(70), nullable=False, default="Hi there, I'm new to Ascura.")
-    long_desc = db.Column(db.Text, nullable=False, default="This user has not specified additional information.")
-    interests = db.Column(db.String(100), nullable=False, default="This user has not specified any interest.")
+    long_desc = db.Column(db.Text, nullable=False, default="No information given")
+    interests = db.Column(db.String(100), nullable=False, default="This user has not specified any interests.")
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False) # Done
     semester = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
