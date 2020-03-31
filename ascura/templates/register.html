@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <div id="main-container">
+        <div id="register-form-div">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <legend>Register</legend>
+                    
+                    {{ form.matrix.label }}
+                    {{ form.matrix }}
+    
+                </fieldset>
+                <div id="submit-div">
+                    {{ form.submit }}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock body %}
