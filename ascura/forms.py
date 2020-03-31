@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
         ('shtm', 'School of Hospitality and Tourism Management'),\
         ('saat', 'School of Aviation and Aeronautic Technology'),\
         ('sss', 'School of Social Sciences')])
-    scet_course = SelectField('Course', validators=[DataRequired()], choices=\
+    """ scet_course = SelectField('Course', validators=[DataRequired()], choices=\
         [('dit', 'DIT'),\
         ('dcs', 'DCS'),\
         ('dtl', 'DTL'),\
@@ -57,7 +57,8 @@ class RegistrationForm(FlaskForm):
         ('dts', 'DTS')])
     sss_course = SelectField('Course', validators=[DataRequired()], choices=\
         [('dbk', 'DBK'),\
-        ('dpk', 'DPK')])
+        ('dpk', 'DPK')]) """
+    course = StringField('Course', validators=[DataRequired(), Length(min=2, max=7)])
     semester = StringField('Semester', validators=[DataRequired(), Length(min=1, max=2)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
