@@ -1,14 +1,29 @@
-* {
+/* * {
     margin: 0;
     padding: 0;
-    /* color: #fff; */
-}
+    color: #fff;
+} */
 
-*,
+/* *,
 *::before,
 *::after {
   box-sizing: unset;
+} */
+
+a:hover {
+    color: #fff;
+    text-decoration: none;
 }
+
+.h1, h1 {
+    font-size: revert;
+}
+
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: initial;
+}
+
 
 @font-face {
     font-family: Proxima-Bold;
@@ -41,7 +56,7 @@ body {
     display: flex;
     overflow: hidden;
     justify-content: space-between;
-    height: 5vh;
+    height: 8vh;
 }
 
 #logre-link {
@@ -192,7 +207,7 @@ button.commend {
 }
 
 #jumbotron-custom {
-    height: 80vh;
+    height: 95vh;
     width: 100%;
     padding-top: 100px;
 }
@@ -315,7 +330,7 @@ button.commend {
     justify-content: center;
 }
 
-#footer > h3 {
+#footer > h4 {
     /* padding-top: 20px; */
     color: #fff;
 }

@@ -13,13 +13,43 @@
     border-radius: 5px;
 }
 
-fieldset {
-    border: 4px solid #fff;
-    border-radius: 5px;
+fieldset > legend{
+    /* width: min-content;
+    margin-left: auto;
+    margin-right: auto; */
+    font-size: 30pt;
 }
 
-.form-control-group {
-    /* display: flex;
-    flex-direction: column;
-    justify-content: space-around; */
+#form-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 800px;
+    background-color: #1d1d44;
+    border-radius: 10px;
+}
+
+#form-wrapper > form {
+    padding: 30px;
+    color: #fff;
+}
+
+.btn-info-asc {
+    color: #4db82f;
+    border-color: #4db82f;
+}
+
+.btn-info-asc:hover {
+    color: #fff;
+    background-color: #4db82f;
+    border-color: #4db82f;
+}
+
+.form-control-asc:focus {
+    /* border-color: #93b930; */
+    box-shadow: 0 0 0 .15rem rgb(32, 223, 111);   
+}
+
+.quer-acc {
+    padding-left: 30px;
+    padding-bottom: 30px;
 }
