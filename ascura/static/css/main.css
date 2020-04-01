@@ -1,15 +1,3 @@
-/* * {
-    margin: 0;
-    padding: 0;
-    color: #fff;
-} */
-
-/* *,
-*::before,
-*::after {
-  box-sizing: unset;
-} */
-
 a:hover {
     color: #fff;
     text-decoration: none;
@@ -83,12 +71,8 @@ body {
     align-items: center;
 }
 
-/* #logo {
-    float: left;
-} */
-
 #right-h-content {
-    width: 250px;
+    width: 190px;
     display: flex;
     justify-content: space-between;
     align-items: center;

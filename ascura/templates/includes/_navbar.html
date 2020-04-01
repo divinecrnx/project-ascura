@@ -2,7 +2,7 @@
 <div id="header">
     <div id="left-h-content">
         <div id="logo">
-            <a href="{{ url_for('/') }}"><h1>ASCURA</h1></a>
+            <a href="{{ url_for('home') }}"><h1>ASCURA</h1></a>
         </div>
         <div id="main-search">
             <input type="text" placeholder="Search...">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div id="login-register">
-            <a id="logre-link" href="{{ url_for('register') }}">Login/Register</a>
+            <a id="logre-link" href="{{ url_for('login') }}">Sign In</a>
         </div>
     </div> 
 </div>
