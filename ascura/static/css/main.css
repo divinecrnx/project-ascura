@@ -92,6 +92,16 @@ body {
     border: 2px solid #fff;
 }
 
+.std-m {
+    width: 1000px;
+    margin: 100px auto;
+}
+
+.std-div {
+    background-color: #1d1d44;
+    border-radius: 10px;
+}
+
 #profiles {
     margin: 50px 100px 50px;
     /* background-color: #a57373; */
@@ -317,4 +327,32 @@ button.commend {
 #footer > h4 {
     /* padding-top: 20px; */
     color: #fff;
+}
+
+.school-grid {
+    padding: 50px;
+    display: grid;
+    grid-template-columns: 150px 150px 150px;
+    grid-gap: 1rem;
+    justify-content: space-evenly;
+}
+
+.school-elem {
+    width: 150px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.school-elem > img {
+    width: 150px;
+    height: 150px;
+}
+
+.school-elem > a {
+    margin-top: 10px;
+    text-align: center;
+    background-color: #21a79a;
+    border-radius: 5px;
+    padding: 3px;
 }

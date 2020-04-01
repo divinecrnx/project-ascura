@@ -11,7 +11,11 @@ def home():
 
 @app.route("/register")
 def register():
-    return "<h1>Add a register landing page here.</h1>"
+    return render_template('registerl.html')
+
+@app.route("/about")
+def about():
+    return render_template('about.html')
 
 @app.route("/register/student/scet", methods=['GET', 'POST'])
 def register_scet():
