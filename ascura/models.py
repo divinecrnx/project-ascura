@@ -75,6 +75,7 @@ class FComment(db.Model):
 
 class Faculty(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    password = db.Column(db.String(60), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1)
