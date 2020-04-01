@@ -1,7 +1,8 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from ascura import app, db, bcrypt
 from ascura.forms import SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SSSRegistrationForm, SAATRegistrationForm, SHTMRegistrationForm, LoginForm
 from ascura.models import Role, School, Course, SPost, SComment, FPost, FComment, Faculty, Student
+from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route("/")
 @app.route("/home")
@@ -14,6 +15,8 @@ def register():
 
 @app.route("/register/student/scet", methods=['GET', 'POST'])
 def register_scet():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SCETRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -32,6 +35,8 @@ def register_scet():
 
 @app.route("/register/student/smart", methods=['GET', 'POST'])
 def register_smart():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SMARTRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -50,6 +55,8 @@ def register_smart():
 
 @app.route("/register/student/sbm", methods=['GET', 'POST'])
 def register_sbm():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SBMRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -68,6 +75,8 @@ def register_sbm():
 
 @app.route("/register/student/sss", methods=['GET', 'POST'])
 def register_sss():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SSSRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -86,6 +95,8 @@ def register_sss():
 
 @app.route("/register/student/shtm", methods=['GET', 'POST'])
 def register_shtm():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SHTMRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -104,6 +115,8 @@ def register_shtm():
 
 @app.route("/register/student/saat", methods=['GET', 'POST'])
 def register_saat():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = SAATRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -122,11 +135,32 @@ def register_saat():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
+    # print(current_user.is_authenticated)
+    if current_user.is_authenticated:
+        # print('Authenticated user found')
+        return redirect(url_for('home'))
+    # else:
+    #     print('No user authenticated.')
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+        user_student = Student.query.filter_by(email=form.email.data).first()
+        user_faculty = Faculty.query.filter_by(email=form.email.data).first()
+        
+        if user_student and bcrypt.check_password_hash(user_student.password, form.password.data):
+            # print('Logged in student')
+            login_user(user_student, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        elif user_faculty and bcrypt.check_password_hash(user_faculty.password, form.password.data):
+            # print('Logged in faculty')
+            login_user(user_faculty, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful. Please check username and password', 'danger')
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))

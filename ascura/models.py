@@ -1,5 +1,14 @@
 from datetime import datetime
-from ascura import db
+from ascura import db, login_manager
+from flask_login import UserMixin
+
+@login_manager.user_loader
+def load_student(student_id):
+    return Student.query.get(student_id)
+
+""" @login_manager.user_loader
+def load_faculty(faculty_id):
+    return Faculty.query.get(faculty_id) """
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,7 +73,7 @@ class FComment(db.Model):
     def __repr__(self):
         return "FPost('{content}', '{date_posted}')".format(content=self.content, date_posted=self.date_posted)
 
-class Faculty(db.Model):
+class Faculty(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
@@ -81,8 +90,9 @@ class Faculty(db.Model):
         return "Faculty('{id}', '{first_name}', '{last_name}', '{role}', '{school}')"\
             .format(first_name=self.first_name, last_name=self.last_name, role=self.role_id, school=self.school_id)
 
-class Student(db.Model):
-    matrix = db.Column(db.String(8), unique=True, nullable=False, primary_key=True)
+class Student(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    matrix = db.Column(db.String(8), unique=True, nullable=False)
     password = db.Column(db.String(60), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
@@ -98,6 +108,9 @@ class Student(db.Model):
     posts = db.relationship('SPost', backref='author', lazy=True)
     comments = db.relationship('SComment', backref='author', lazy=True)
 
+    """ def get_id(self):
+        return self.matrix.encode(encoding='UTF-8',errors='strict') """
+    
     def __repr__(self):
         return "Student('{matrix}', '{first_name}', '{last_name}', '{role}', '{school}', '{course}', '{semester}')"\
             .format(matrix=self.matrix, first_name=self.first_name, last_name=self.last_name, role=self.role_id, school=self.school_id, course=self.course_id, semester=self.semester)
