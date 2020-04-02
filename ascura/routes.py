@@ -11,6 +11,9 @@ def home():
 
 @app.route("/register")
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
     return render_template('registerl.html')
 
 @app.route("/about")
@@ -162,9 +165,14 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, title='Log In')
 
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+@app.route("/account")
+@login_required
+def account():
+    return render_template('account.html', title='Account')
