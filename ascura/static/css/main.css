@@ -356,3 +356,11 @@ button.commend {
     border-radius: 5px;
     padding: 3px;
 }
+
+.lg-query {
+    margin-bottom: 20px;
+}
+
+.lg-query > * {
+    color: #fff;
+}
