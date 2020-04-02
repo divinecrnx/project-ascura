@@ -1,16 +1,18 @@
 from ascura import db
-from ascura.models import Role, School, Course, SPost, SComment, FPost, FComment, Faculty, Student
+from ascura.models import Role, School, Course, UserType, User, Post, Comment
 
 db.create_all() # Create database
 
-# role_unspecified = Role(role_name="Unspecified")
+usertype_admin = UserType(uname="Admin")
+usertype_elevated = UserType(uname="Elevated")
+usertype_normal = UserType(uname="Normal")
+
 role_student = Role(role_name="Student")
 role_vice_chairman = Role(role_name="Vice Chairman")
 role_chairman = Role(role_name="Chairman")
 role_lecturer = Role(role_name="Lecturer")
 role_hop = Role(role_name="HOP")
 role_dean = Role(role_name="Dean")
-
 
 school_scet = School(school_name="SCET")
 school_smart = School(school_name="SMART")
@@ -47,12 +49,22 @@ course_lme = Course(course_name="LME")
 course_dbk = Course(course_name="DBK")
 course_dpk = Course(course_name="DPK")
 
-""" student_1 = Student(matrix="T0000404", password="password",\
-    first_name="Zulhilmi", last_name="Abdul Rasheed",\
-    role_id=3, school_id=1, course_id=1, semester=5,\
-    email="zulhilmi.rasheed98@gmail.com") """
+""" user_1 = User(first_name="Zulhilmi", last_name="Abdul Rasheed",\
+    username="divinecrnx", email="zulhilmi.rasheed98@gmail.com",\
+    password="password", school_id=1, course_id=1, semester=5,\
+    role_id=3, u_type=1)
 
-# post_1 = SPost(title="First student post", content="First student post content", user_id=x.matrix)
+post_1 = Post(title="My first post", content="My first post content", user_id=1, school_id=1)
+comment_1 = Comment(content="My first comment to my first post", user_id=1, post_id=1)
+
+db.session.add(user_1)
+
+db.session.add(post_1)
+db.session.add(comment_1) """
+
+db.session.add(usertype_admin)
+db.session.add(usertype_elevated)
+db.session.add(usertype_normal)
 
 db.session.add(role_student)
 db.session.add(role_vice_chairman)
@@ -95,8 +107,5 @@ db.session.add(course_lme)
 
 db.session.add(course_dbk)
 db.session.add(course_dpk)
-
-# db.session.add(post_1)
-# db.session.add(student_1)
 
 db.session.commit()
