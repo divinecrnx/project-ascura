@@ -1,0 +1,84 @@
+.profile-container {
+    height: 400px;
+    width: 260px;
+    background-color: #1d1d44;
+    /* background-color: #231E39; */
+    border-radius: 30px;
+    /* border: 1px solid #fff; */
+    position: relative;
+}
+
+.profile-pic {
+    display: flex;
+    justify-content: space-around;
+    /* margin-top: 15%; */
+    padding-top: 15%;
+    position: relative;
+}
+
+.profile-pic > img {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #fff;
+    /* background-image: url(./bg.jpg); */
+    /* border-top-left-radius: 30px;
+    border-top-right-radius: 30px; */
+}
+
+.school-role {
+    position: absolute;
+    bottom: -10px;
+    width: 100px;
+    color: #fff;
+    font-size: 12pt;
+    background-color: #93b930;
+    text-align: center;
+    /* font-family: Proxima-Regular; */
+}
+
+.mid-container {
+    margin: 20px 10% 10px;
+    font-family: Proxima-Regular;
+}
+
+.user-name {
+    color: #fff;
+    font-size: 18px;
+}
+
+.short-desc {
+    color: #b3b8cd;
+    font-size: 13px;
+    margin-top: 10px;    
+}
+
+.bottom-container {
+    position: absolute;
+    bottom: 25px;
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.bottom-container > button {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+
+button.connect {
+    background-image: linear-gradient(to right, #2e2459, #3d2459);
+    color: #fff;
+    cursor: pointer;
+    width: 100px;
+}
+
+button.commend {
+    border: 2px solid #2e2459;
+    background-color: #212129;
+    cursor: pointer;
+    color: #fff;
+    width: 100px;
+}
