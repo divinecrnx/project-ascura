@@ -144,24 +144,18 @@ def register_saat():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    # print(current_user.is_authenticated)
     if current_user.is_authenticated:
-        # print('Authenticated user found')
         return redirect(url_for('home'))
-    # else:
-    #     print('No user authenticated.')
     form = LoginForm()
     if form.validate_on_submit():
         user_student = Student.query.filter_by(email=form.email.data).first()
         user_faculty = Faculty.query.filter_by(email=form.email.data).first()
         
         if user_student and bcrypt.check_password_hash(user_student.password, form.password.data):
-            # print('Logged in student')
             login_user(user_student, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         elif user_faculty and bcrypt.check_password_hash(user_faculty.password, form.password.data):
-            # print('Logged in faculty')
             login_user(user_faculty, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
