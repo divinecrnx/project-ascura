@@ -7,20 +7,6 @@
                 <fieldset class="form-group">
                     <legend class="mb-4">Register</legend>
                     <div class="form-group">
-                        {{ form.matrix.label(class="form-control-label") }}
-    
-                        {% if form.matrix.errors %}
-                            {{ form.matrix(class="form-control form-control-asc is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.matrix.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.matrix(class="form-control form-control-asc") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
                         {{ form.first_name.label(class="form-control-label") }}
                         {% if form.first_name.errors %}
                             {{ form.first_name(class="form-control form-control-asc is-invalid") }}
@@ -47,29 +33,16 @@
                         {% endif %}
                     </div>
                     <div class="form-group">
-                        {{ form.course.label(class="form-control-label") }}
-                        {% if form.course.errors %}
-                            {{ form.course(class="form-control form-control-asc is-invalid") }}
+                        {{ form.username.label(class="form-control-label") }}
+                        {% if form.username.errors %}
+                            {{ form.username(class="form-control form-control-asc is-invalid") }}
                             <div class="invalid-feedback">
-                                {% for error in form.course.errors %}
+                                {% for error in form.username.errors %}
                                     <span>{{ error }}</span>
                                 {% endfor %}
                             </div>
                         {% else %}
-                            {{ form.course(class="form-control form-control-asc") }}
-                        {% endif %}
-                    </div>
-                    <div class="form-group">
-                        {{ form.semester.label(class="form-control-label") }}
-                        {% if form.semester.errors %}
-                            {{ form.semester(class="form-control form-control-asc is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for error in form.semester.errors %}
-                                    <span>{{ error }}</span>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            {{ form.semester(class="form-control form-control-asc") }}
+                            {{ form.username(class="form-control form-control-asc") }}
                         {% endif %}
                     </div>
                     <div class="form-group">
@@ -109,6 +82,32 @@
                             </div>
                         {% else %}
                             {{ form.confirm_password(class="form-control form-control-asc") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.course.label(class="form-control-label") }}
+                        {% if form.course.errors %}
+                            {{ form.course(class="form-control form-control-asc is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.course.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.course(class="form-control form-control-asc") }}
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        {{ form.semester.label(class="form-control-label") }}
+                        {% if form.semester.errors %}
+                            {{ form.semester(class="form-control form-control-asc is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.semester.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.semester(class="form-control form-control-asc") }}
                         {% endif %}
                     </div>
                 </fieldset>
