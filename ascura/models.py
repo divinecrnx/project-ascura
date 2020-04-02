@@ -40,7 +40,9 @@ class SPost(db.Model):
     title = db.Column(db.String(100), nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False, default=datetime.now)
     content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('student.matrix'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('student.id'), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
+
 
     def __repr__(self):
         return "SPost('{title}', '{date_posted}')".format(title=self.title, date_posted=self.date_posted)
@@ -97,21 +99,38 @@ class Student(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1) # Done
-    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False) # Done
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'), default=1)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
     short_desc = db.Column(db.String(70), nullable=False, default="Hi there, I'm new to Ascura.")
     long_desc = db.Column(db.Text, nullable=False, default="No information given")
     interests = db.Column(db.String(100), nullable=False, default="This user has not specified any interests.")
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False) # Done
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     semester = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     posts = db.relationship('SPost', backref='author', lazy=True)
     comments = db.relationship('SComment', backref='author', lazy=True)
-
-    """ def get_id(self):
-        return self.matrix.encode(encoding='UTF-8',errors='strict') """
     
     def __repr__(self):
         return "Student('{matrix}', '{first_name}', '{last_name}', '{role}', '{school}', '{course}', '{semester}')"\
             .format(matrix=self.matrix, first_name=self.first_name, last_name=self.last_name, role=self.role_id, school=self.school_id, course=self.course_id, semester=self.semester)
+
+class UserType(db.Model):
+    utype = db.Column(db.Integer, primary_key=True)
+
+    def __repr__(self):
+        return "User Type('{utype}')".format(utype=utype)
+
+# Admin, Lecturer, Student: 1, 2, 3
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
+    password = db.Column(db.String(60), nullable=False)
+    posts = db.relationship('Post', backref='author', lazy=True)
+    comments = db.relationship('Comments', backref='author', lazy=True)
+    u_type = db.Column(db.Integer, db.ForeignKey('usertype.id'), nullable=False)
+
+    def __repr__(self):
+        return "User('{self.username}', '{self.email}', '{self.image_file}')".format()
