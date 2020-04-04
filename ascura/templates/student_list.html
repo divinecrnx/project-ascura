@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% block body %}
+    <!-- Main content -->
+    <div id="main-container">
+        <!-- Rows of profiles will be shown in this div -->
+        <div id="profiles">
+            {% for sem_num in range(1, 8) %}
+                {% if sem_num == 7 %}
+                    <h1>Semester 6+</h1>
+                {% else %}
+                    <h1>Semester {{ sem_num }}</h1>
+                {% endif %}
+                <!-- Row of limited profiles -->
+                <div class="profile-row">
+                    {% for student in students %}
+                        {% if student.semester|int == sem_num %}
+                            <!-- Single profile -->
+                            <div class="profile-container">
+                                <div class="top-container">
+                                    <div class="profile-pic">
+                                        <img src="{{ url_for('static', filename='images/profile_pics/' + student.image_file) }}" alt="Profile picture">
+                                        <div class="school-role">
+                                            <span>{{ student.role.role_name }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mid-container">
+                                    <p class="user-name">{{ student.first_name }}</p>
+                                    <p class="short-desc">{{ student.short_desc }}</p>
+                                </div>
+                                <div class="bottom-container">
+                                    <button class="connect">Connect</button>
+                                    <button class="commend">Commend</button>
+                                </div>
+                            </div>
+                        {% elif sem_num == 7 %}
+                            {# {% for student in students %} #}
+                                {% if student.semester == '6+' %}
+                                    <!-- Single profile -->
+                                    <div class="profile-container">
+                                        <div class="top-container">
+                                            <div class="profile-pic">
+                                                <img src="{{ url_for('static', filename='images/profile_pics/' + student.image_file) }}" alt="Profile picture">
+                                                <div class="school-role">
+                                                    <span>{{ student.role.role_name }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mid-container">
+                                            <p class="user-name">{{ student.first_name }}</p>
+                                            <p class="short-desc">{{ student.short_desc }}</p>
+                                        </div>
+                                        <div class="bottom-container">
+                                            <button class="connect">Connect</button>
+                                            <button class="commend">Commend</button>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {# {% endfor %} #}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock body %}

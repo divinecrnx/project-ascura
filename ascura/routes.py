@@ -96,7 +96,7 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-def save_picture(form_picture):
+def save_picture(form_picture): # Resizes an uploaded profile picture
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -127,3 +127,27 @@ def account():
         form.semester.data = current_user.semester
     image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
+@app.route("/<string:school>/students", methods=['GET'])
+@login_required
+def school_s_list(school):
+    if school == 'scet':
+        students = User.query.filter_by(school_id=1).all()
+        return render_template('student_list.html', students=students)
+    elif school == 'smart':
+        students = User.query.filter_by(school_id=2).all()
+        return render_template('student_list.html', students=students)
+    elif school == 'sbm':
+        students = User.query.filter_by(school_id=3).all()
+        return render_template('student_list.html', students=students)
+    elif school == 'shtm':
+        students = User.query.filter_by(school_id=4).all()
+        return render_template('student_list.html', students=students)
+    elif school == 'saat':
+        students = User.query.filter_by(school_id=5).all()
+        return render_template('student_list.html', students=students)
+    elif school == 'sss':
+        students = User.query.filter_by(school_id=6).all()
+        return render_template('student_list.html', students=students)
+    else:
+        return '<h1>FALSE HAHA</h1>' # Change this to something else later

@@ -1,3 +1,17 @@
+#profiles {
+    margin: 50px 100px 50px;
+    /* background-color: #a57373; */
+}
+
+.profile-row {
+    width: 100%;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+}
+
 .profile-container {
     height: 400px;
     width: 260px;
