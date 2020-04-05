@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <style>
+        #school-wall {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <div id="main-container">
+        <div id="school-wall">
+            <div id="school-content">
+                <img src="{{ school_img }}" alt="">
+                <p>{{ title }}</p>
+                <div class="school-member-count">
+                    <a class="school-m-count" href="{{ students_list_link }}">{{ student_num }}<span> students</span></a>
+                </div>
+                <div class="school-member-count">
+                    <a class="school-m-count" href="#">{{ lecturer_num }}<span> lecturers</span></a>
+                </div>
+                
+                <div id="school-p-button">
+                    <a href="{{ new_post_link }}">New Post</a>
+                </div>
+            </div>
+            <div id="school-info">                
+                <div class="s-post">
+                    <h3>{{ post.title }}</h3>
+                    {% if post.author == current_user %}
+                        <div>
+                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', school=post.school.school_name|lower, post_id=post.id) }}">Update</a>
+                            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                        </div>
+                    {% endif %}
+                    <small>{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
+                    <p>{{ post.content }}</p>
+                    {% set comments_count = [] %}
+                    {% for comment in comments %}
+                        {% if comment.post.id == post.id %}
+                            {{ comments_count.append(comment) or "" }}
+                        {% endif %}
+                    {% endfor %}
+                    {% if comments_count|length == 1 %}
+                        <small>{{ comments_count|length }} Comment</small>
+                    {% elif comments_count|length == 0 %}
+                        <small>No Comments</small>
+                    {% else %}
+                        <small>{{ comments_count|length }} Comments</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <form action="{{ url_for('delete_post', school=post.school.school_name|lower, post_id=post.id) }}" method="POST">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
