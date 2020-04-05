@@ -2,7 +2,7 @@ import secrets, os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from ascura import app, db, bcrypt
-from ascura.forms import SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm
+from ascura.forms import SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
@@ -159,6 +159,7 @@ def school_page(school):
 
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     students_list_link = url_for('school_s_list', school=school)
+    new_post_link = url_for('new_post', school=school)
     # faculty_list_link = url_for('school_s_list', school=school)
 
     if school == 'scet':
@@ -198,7 +199,37 @@ def school_page(school):
         student_num=len(students),\
         lecturer_num=len(lecturers),\
         school_img=school_img,\
-        students_list_link=students_list_link,\
+        students_list_link=students_list_link, new_post_link=new_post_link,\
         posts=posts, comments=comments)
 
         # Continue thinking about implementing comments and actually rendering everything in the template
+
+@app.route("/<string:school>/post/new", methods=['GET', 'POST'])
+@login_required
+def new_post(school):
+    
+    school_img = url_for('static', filename='images/' + school + 'logo.png')
+
+    form = PostForm()
+    if form.validate_on_submit():
+        if school == 'scet':
+            s_id = 1
+        elif school == 'smart':
+            s_id = 2
+        elif school == 'sbm':
+            s_id = 3
+        elif school == 'shtm':
+            s_id = 4
+        elif school == 'saat':
+            s_id = 5
+        elif school == 'sss':
+            s_id = 6
+        else:
+            return '<h1>FALSE HAHA</h1>' # Change this to something else later
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, school_id=s_id)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post has been created!', 'success')
+        return redirect(url_for('school_page', school=school))
+    return render_template('create_post.html', title=school.upper(),
+                           form=form, legend=school.upper() + '- New Post', school_img=school_img)
