@@ -5,6 +5,7 @@ from ascura import app, db, bcrypt
 from ascura.forms import SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
+from sqlalchemy import or_, and_
 
 @app.route("/")
 @app.route("/home")
@@ -151,3 +152,53 @@ def school_s_list(school):
         return render_template('student_list.html', students=students)
     else:
         return '<h1>FALSE HAHA</h1>' # Change this to something else later
+
+@app.route("/<string:school>", methods=['GET'])
+@login_required
+def school_page(school):
+
+    school_img = url_for('static', filename='images/' + school + 'logo.png')
+    students_list_link = url_for('school_s_list', school=school)
+    # faculty_list_link = url_for('school_s_list', school=school)
+
+    if school == 'scet':
+        students = User.query.filter(User.school_id==1, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==1, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==1).all()
+        comments = Comment.query.filter(Comment.school_id==1).all()
+    elif school == 'smart':
+        students = User.query.filter(User.school_id==2, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==2, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==2).all()
+        comments = Comment.query.filter(Comment.school_id==2).all()
+    elif school == 'sbm':
+        students = User.query.filter(User.school_id==3, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==3, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==3).all()
+        comments = Comment.query.filter(Comment.school_id==3).all()
+    elif school == 'shtm':
+        students = User.query.filter(User.school_id==4, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==4, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==4).all()
+        comments = Comment.query.filter(Comment.school_id==4).all()
+    elif school == 'saat':
+        students = User.query.filter(User.school_id==5, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==5, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==5).all()
+        comments = Comment.query.filter(Comment.school_id==5).all()
+    elif school == 'sss':
+        students = User.query.filter(User.school_id==6, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+        lecturers = User.query.filter(User.school_id==6, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+        posts = Post.query.filter(Post.school_id==6).all()
+        comments = Comment.query.filter(Comment.school_id==6).all()
+    else:
+        return '<h1>FALSE HAHA</h1>' # Change this to something else later
+    
+    return render_template('school.html', title=school.upper(),\
+        student_num=len(students),\
+        lecturer_num=len(lecturers),\
+        school_img=school_img,\
+        students_list_link=students_list_link,\
+        posts=posts, comments=comments)
+
+        # Continue thinking about implementing comments and actually rendering everything in the template

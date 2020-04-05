@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <style>
+        #school-wall {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <div id="main-container">
+        <div id="school-wall">
+            <div id="school-content">
+                <img src="{{ school_img }}" alt="">
+                <p>{{ title }}</p>
+                <div class="school-member-count">
+                    <a class="school-m-count" href="{{ students_list_link }}">{{ student_num }}<span> students</span></a>
+                </div>
+                <div class="school-member-count">
+                    <a class="school-m-count" href="#">{{ lecturer_num }}<span> lecturers</span></a>
+                </div>
+                
+                <div id="school-p-button">
+                    <a href="#">New Post</a>
+                </div>
+            </div>
+            <div id="school-info">
+                {% for post in posts %}
+                    <div class="s-post">
+                        <h3>{{ post.title }}</h3>
+                        <small>{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
+                        <p>{{ post.content }}</p>
+                        {% set comments_count = [] %}
+                        {% for comment in comments %}
+                            {% if comment.post.id == post.id %}
+                                {{ comments_count.append(comment) or "" }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if comments_count|length == 1 %}
+                            <small>{{ comments_count|length }} Comment</small>
+                        {% elif comments_count|length == 0 %}
+                            <small>No Comments</small>
+                        {% else %}
+                            <small>{{ comments_count|length }} Comments</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
