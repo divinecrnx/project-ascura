@@ -48,6 +48,8 @@ class School(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     school_name = db.Column(db.String(5), nullable=False, unique=True)
     student_school = db.relationship("User", backref='school', lazy=True)
+    post_school = db.relationship("Post", backref='school', lazy=True)
+    comment_school = db.relationship("Comment", backref='school', lazy=True)
 
     def __repr__(self):
         return "School('{id}', '{school_name}')".format(id=self.id, school_name=self.school_name)
