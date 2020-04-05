@@ -52,15 +52,15 @@ course_dpk = Course(course_name="DPK")
 """ user_1 = User(first_name="Zulhilmi", last_name="Abdul Rasheed",\
     username="divinecrnx", email="zulhilmi.rasheed98@gmail.com",\
     password="password", school_id=1, course_id=1, semester=5,\
-    role_id=3, u_type=1)
+    role_id=3, u_type=1) """
 
 post_1 = Post(title="My first post", content="My first post content", user_id=1, school_id=1)
-comment_1 = Comment(content="My first comment to my first post", user_id=1, post_id=1)
+comment_1 = Comment(content="My first comment to my first post", user_id=1, post_id=1, school_id=1)
 
-db.session.add(user_1)
+# db.session.add(user_1)
 
 db.session.add(post_1)
-db.session.add(comment_1) """
+db.session.add(comment_1)
 
 db.session.add(usertype_admin)
 db.session.add(usertype_elevated)
