@@ -233,3 +233,41 @@ def new_post(school):
         return redirect(url_for('school_page', school=school))
     return render_template('create_post.html', title=school.upper(),
                            form=form, legend=school.upper() + '- New Post', school_img=school_img)
+
+@app.route("/<string:school>/post/<int:post_id>")
+def post(school, post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post.html', title=post.title, post=post)
+
+@app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_post(school, post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author != current_user:
+        abort(403)
+    form = PostForm()
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        db.session.commit()
+        flash('Your post has been updated!', 'success')
+        return redirect(url_for('post', school=post.school.school_name.lower(), post_id=post.id))
+    elif request.method == 'GET':
+        form.title.data = post.title
+        form.content.data = post.content
+    return render_template('create_post.html', title='Update Post',
+                           form=form, legend='Update Post')
+
+@app.route("/<string:school>/post/<int:post_id>/delete", methods=['POST'])
+@login_required
+def delete_post(school, post_id):
+    post = Post.query.get_or_404(post_id)
+    comments = Comment.query.filter(Comment.post_id==post_id).all()
+    if post.author != current_user:
+        abort(403)
+    db.session.delete(post)
+    for comment in comments:
+        db.session.delete(comment)
+    db.session.commit()
+    flash('Your post has been deleted!', 'success')
+    return redirect(url_for('school_page', school=school))
