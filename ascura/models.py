@@ -31,9 +31,10 @@ class Comment(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
 
     def __repr__(self):
-        return "Comment('{title}', '{date_posted}')".format(title=self.title, date_posted=self.date_posted)
+        return "Comment('{content}', '{date_posted}')".format(content=self.content, date_posted=self.date_posted)
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
