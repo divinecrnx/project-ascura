@@ -129,29 +129,29 @@ def account():
     image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
-@app.route("/<string:school>/students", methods=['GET'])
+@app.route("/<string:school>/members", methods=['GET'])
 @login_required
 def school_s_list(school):
     if school == 'scet':
-        students = User.query.filter_by(school_id=1).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=1).all()
+        return render_template('members_list.html', members=members)
     elif school == 'smart':
-        students = User.query.filter_by(school_id=2).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=2).all()
+        return render_template('members_list.html', members=members)
     elif school == 'sbm':
-        students = User.query.filter_by(school_id=3).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=3).all()
+        return render_template('members_list.html', members=members)
     elif school == 'shtm':
-        students = User.query.filter_by(school_id=4).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=4).all()
+        return render_template('members_list.html', members=members)
     elif school == 'saat':
-        students = User.query.filter_by(school_id=5).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=5).all()
+        return render_template('members_list.html', members=members)
     elif school == 'sss':
-        students = User.query.filter_by(school_id=6).all()
-        return render_template('student_list.html', students=students)
+        members = User.query.filter_by(school_id=6).all()
+        return render_template('members_list.html', members=members)
     else:
-        return '<h1>FALSE HAHA</h1>' # Change this to something else later
+        return '<h1>FALSE</h1>' # Change this to something else later
 
 @app.route("/<string:school>", methods=['GET'])
 @login_required
@@ -193,7 +193,7 @@ def school_page(school):
         posts = Post.query.filter(Post.school_id==6).all()
         comments = Comment.query.filter(Comment.school_id==6).all()
     else:
-        return '<h1>FALSE HAHA</h1>' # Change this to something else later
+        return '<h1>FALSE</h1>' # Change this to something else later
     
     return render_template('school.html', title=school.upper(),\
         student_num=len(students),\
@@ -201,8 +201,6 @@ def school_page(school):
         school_img=school_img,\
         students_list_link=students_list_link, new_post_link=new_post_link,\
         posts=posts, comments=comments)
-
-        # Continue thinking about implementing comments and actually rendering everything in the template
 
 @app.route("/<string:school>/post/new", methods=['GET', 'POST'])
 @login_required
@@ -225,7 +223,7 @@ def new_post(school):
         elif school == 'sss':
             s_id = 6
         else:
-            return '<h1>FALSE HAHA</h1>' # Change this to something else later
+            return '<h1>FALSE</h1>' # Change this to something else later
         post = Post(title=form.title.data, content=form.content.data, author=current_user, school_id=s_id)
         db.session.add(post)
         db.session.commit()
