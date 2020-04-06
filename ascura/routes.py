@@ -1,8 +1,8 @@
 import secrets, os
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from ascura import app, db, bcrypt
-from ascura.forms import SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
+from ascura.forms import FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
@@ -75,6 +75,52 @@ def register(school):
         flash('Account created for {username}'.format(username=form.username.data), 'success')
         return redirect(url_for('login'))
     return render_template('register.html', form=form, title='Register', school=school)
+
+@app.route("/register/faculty/<string:school>", methods=['GET', 'POST'])
+@login_required
+def register_faculty(school):
+    form = FacultyRegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+
+        user = None # Init var
+        
+        if school == 'scet':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=1, role_id=form.role.data)
+        elif school == 'smart':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=2, role_id=form.role.data)
+        elif school == 'sbm':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=3, role_id=form.role.data)
+        elif school == 'shtm':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=4, role_id=form.role.data)
+        elif school == 'saat':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=5, role_id=form.role.data)
+        elif school == 'sss':
+            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+            username=form.username.data, email=form.email.data, password=hashed_password,\
+            school_id=6, role_id=form.role.data)
+
+        db.session.add(user)
+        db.session.commit()
+
+        flash('Account created for {username}'.format(username=form.username.data), 'success')
+        return redirect(url_for('login'))
+    
+    if current_user.u_type == 1:
+        return render_template('register_f.html', form=form, title='Faculty Register')
+    else:
+        abort(403)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
