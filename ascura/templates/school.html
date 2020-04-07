@@ -19,9 +19,11 @@
                     <a class="school-m-count" href="#">{{ lecturer_num }}<span> lecturers</span></a>
                 </div>
                 
-                <div id="school-p-button">
-                    <a href="{{ new_post_link }}">New Post</a>
-                </div>
+                {% if current_user.school.school_name == title %}
+                    <div id="school-p-button">
+                        <a href="{{ new_post_link }}">New Post</a>
+                    </div>
+                {% endif %}
             </div>
             <div id="school-info">
                 {% for post in posts %}
