@@ -1,12 +1,13 @@
 <!-- Top header/navigation bar -->
 <div id="header">
     <div id="left-h-content">
+        <img src="{{ url_for('static', filename='images/Ascura Icon.png') }}" alt="">
         <div id="logo">
             <a href="{{ url_for('home') }}"><h1>ASCURA</h1></a>
         </div>
-        <div id="main-search">
+        <!-- <div id="main-search">
             <input type="text" placeholder="Search...">
-        </div>
+        </div> -->
     </div>
     <div id="right-h-content">
         <div id="main-nav-links">
@@ -16,11 +17,11 @@
             <div>
                 <a href="{{ url_for('about') }}">About</a>
             </div>
+            {% if current_user.is_authenticated %}
             <div>
-                {% if current_user.is_authenticated %}
-                    <a href="{{ url_for('account') }}">Account</a>
-                {% endif %}
+                <a href="{{ url_for('account') }}">Account</a>
             </div>
+            {% endif %}
         </div>
         <div id="login-register">
             {% if current_user.is_authenticated %}
