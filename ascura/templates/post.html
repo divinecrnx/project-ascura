@@ -20,7 +20,7 @@
                 </div>
                 
                 <div id="school-p-button">
-                    <a href="{{ new_post_link }}">New Post</a>
+                    <a href="{{ url_for('school_page', school=post.school.school_name|lower) }}">Back to posts</a>
                 </div>
             </div>
             <div id="school-info">                
