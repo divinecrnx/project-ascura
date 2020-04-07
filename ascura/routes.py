@@ -23,6 +23,24 @@ def registerl():
 def about():
     return render_template('about.html')
 
+# Function that takes in a school string and returns its id
+def get_school_id(school):
+    if school == 'scet':
+        school_id = 1
+    elif school == 'smart':
+        school_id = 2
+    elif school == 'sbm':
+        school_id = 3
+    elif school == 'shtm':
+        school_id = 4
+    elif school == 'saat':
+        school_id = 5
+    elif school == 'sss':
+        school_id = 6
+
+    return school_id
+
+
 @app.route("/register/student/<string:school>", methods=['GET', 'POST'])
 def register(school):
     if current_user.is_authenticated:
@@ -39,41 +57,21 @@ def register(school):
         form = SAATRegistrationForm()
     elif school == 'sss':
         form = SSSRegistrationForm()
+    
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-
-        user = None # Init var
+        school_id = get_school_id(school)
         
-        if school == 'scet':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=1, course_id=form.course.data, semester=form.semester.data)
-        elif school == 'smart':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=2, course_id=form.course.data, semester=form.semester.data)
-        elif school == 'sbm':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=3, course_id=form.course.data, semester=form.semester.data)
-        elif school == 'shtm':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=4, course_id=form.course.data, semester=form.semester.data)
-        elif school == 'saat':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=5, course_id=form.course.data, semester=form.semester.data)
-        elif school == 'sss':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=6, course_id=form.course.data, semester=form.semester.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+        username=form.username.data, email=form.email.data, password=hashed_password,\
+        school_id=school_id, course_id=form.course.data, semester=form.semester.data)
 
         db.session.add(user)
         db.session.commit()
 
         flash('Account created for {username}'.format(username=form.username.data), 'success')
         return redirect(url_for('login'))
+    
     return render_template('register.html', form=form, title='Register', school=school)
 
 @app.route("/register/faculty/<string:school>", methods=['GET', 'POST'])
@@ -84,31 +82,11 @@ def register_faculty(school):
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
         user = None # Init var
+        school_id = get_school_id(school)
         
-        if school == 'scet':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=1, role_id=form.role.data)
-        elif school == 'smart':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=2, role_id=form.role.data)
-        elif school == 'sbm':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=3, role_id=form.role.data)
-        elif school == 'shtm':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=4, role_id=form.role.data)
-        elif school == 'saat':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=5, role_id=form.role.data)
-        elif school == 'sss':
-            user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
-            username=form.username.data, email=form.email.data, password=hashed_password,\
-            school_id=6, role_id=form.role.data)
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data,\
+        username=form.username.data, email=form.email.data, password=hashed_password,\
+        school_id=school_id, role_id=form.role.data)
 
         db.session.add(user)
         db.session.commit()
@@ -178,26 +156,10 @@ def account():
 @app.route("/<string:school>/members", methods=['GET'])
 @login_required
 def school_s_list(school):
-    if school == 'scet':
-        members = User.query.filter_by(school_id=1).all()
-        return render_template('members_list.html', members=members)
-    elif school == 'smart':
-        members = User.query.filter_by(school_id=2).all()
-        return render_template('members_list.html', members=members)
-    elif school == 'sbm':
-        members = User.query.filter_by(school_id=3).all()
-        return render_template('members_list.html', members=members)
-    elif school == 'shtm':
-        members = User.query.filter_by(school_id=4).all()
-        return render_template('members_list.html', members=members)
-    elif school == 'saat':
-        members = User.query.filter_by(school_id=5).all()
-        return render_template('members_list.html', members=members)
-    elif school == 'sss':
-        members = User.query.filter_by(school_id=6).all()
-        return render_template('members_list.html', members=members)
-    else:
-        return '<h1>FALSE</h1>' # Change this to something else later
+    school_id = get_school_id(school)
+    members = User.query.filter_by(school_id=school_id).all()
+
+    return render_template('members_list.html', members=members)
 
 @app.route("/<string:school>", methods=['GET'])
 @login_required
@@ -206,40 +168,13 @@ def school_page(school):
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     students_list_link = url_for('school_s_list', school=school)
     new_post_link = url_for('new_post', school=school)
+    school_id = get_school_id(school)
 
-    if school == 'scet':
-        students = User.query.filter(User.school_id==1, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==1, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==1).all()
-        comments = Comment.query.filter(Comment.school_id==1).all()
-    elif school == 'smart':
-        students = User.query.filter(User.school_id==2, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==2, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==2).all()
-        comments = Comment.query.filter(Comment.school_id==2).all()
-    elif school == 'sbm':
-        students = User.query.filter(User.school_id==3, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==3, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==3).all()
-        comments = Comment.query.filter(Comment.school_id==3).all()
-    elif school == 'shtm':
-        students = User.query.filter(User.school_id==4, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==4, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==4).all()
-        comments = Comment.query.filter(Comment.school_id==4).all()
-    elif school == 'saat':
-        students = User.query.filter(User.school_id==5, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==5, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==5).all()
-        comments = Comment.query.filter(Comment.school_id==5).all()
-    elif school == 'sss':
-        students = User.query.filter(User.school_id==6, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-        lecturers = User.query.filter(User.school_id==6, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-        posts = Post.query.filter(Post.school_id==6).all()
-        comments = Comment.query.filter(Comment.school_id==6).all()
-    else:
-        return '<h1>FALSE</h1>' # Change this to something else later
-    
+    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+    posts = Post.query.filter(Post.school_id==school_id).all()
+    comments = Comment.query.filter(Comment.school_id==school_id).all()
+
     return render_template('school.html', title=school.upper(),\
         student_num=len(students),\
         lecturer_num=len(lecturers),\
@@ -255,24 +190,12 @@ def new_post(school):
         return redirect(url_for('school_page', school=school))
     
     school_img = url_for('static', filename='images/' + school + 'logo.png')
+    school_id = get_school_id(school)
 
     form = PostForm()
     if form.validate_on_submit():
-        if school == 'scet':
-            s_id = 1
-        elif school == 'smart':
-            s_id = 2
-        elif school == 'sbm':
-            s_id = 3
-        elif school == 'shtm':
-            s_id = 4
-        elif school == 'saat':
-            s_id = 5
-        elif school == 'sss':
-            s_id = 6
-        else:
-            return '<h1>FALSE</h1>' # Change this to something else later
-        post = Post(title=form.title.data, content=form.content.data, author=current_user, school_id=s_id)
+        
+        post = Post(title=form.title.data, content=form.content.data, author=current_user, school_id=school_id)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
@@ -286,21 +209,10 @@ def post(school, post_id):
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter(Comment.post_id==post.id).all()
+    school_id = get_school_id(school)
 
     if form.validate_on_submit():
-        if school == 'scet':
-            s_id = 1
-        elif school == 'smart':
-            s_id = 2
-        elif school == 'sbm':
-            s_id = 3
-        elif school == 'shtm':
-            s_id = 4
-        elif school == 'saat':
-            s_id = 5
-        elif school == 'sss':
-            s_id = 6
-        comment = Comment(content=form.content.data, author=current_user, post_id=post.id, school_id=s_id)
+        comment = Comment(content=form.content.data, author=current_user, post_id=post.id, school_id=school_id)
         db.session.add(comment)
         db.session.commit()
         flash('Your comment has been posted!', 'success')
