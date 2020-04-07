@@ -206,7 +206,6 @@ def school_page(school):
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     students_list_link = url_for('school_s_list', school=school)
     new_post_link = url_for('new_post', school=school)
-    # faculty_list_link = url_for('school_s_list', school=school)
 
     if school == 'scet':
         students = User.query.filter(User.school_id==1, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
@@ -251,6 +250,9 @@ def school_page(school):
 @app.route("/<string:school>/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post(school):
+
+    if current_user.school.school_name.lower() != school:
+        return redirect(url_for('school_page', school=school))
     
     school_img = url_for('static', filename='images/' + school + 'logo.png')
 
@@ -280,8 +282,10 @@ def new_post(school):
 
 @app.route("/<string:school>/post/<int:post_id>")
 def post(school, post_id):
+    school_img = url_for('static', filename='images/' + school + 'logo.png')
+
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post)
+    return render_template('post.html', title=post.title, post=post, school_img=school_img)
 
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
@@ -302,7 +306,7 @@ def update_post(school, post_id):
     return render_template('create_post.html', title='Update Post',
                            form=form, legend='Update Post')
 
-@app.route("/<string:school>/post/<int:post_id>/delete", methods=['POST'])
+@app.route("/<string:school>/post/<int:post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(school, post_id):
     post = Post.query.get_or_404(post_id)
