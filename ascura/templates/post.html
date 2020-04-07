@@ -48,6 +48,39 @@
                         <small>{{ comments_count|length }} Comments</small>
                     {% endif %}
                 </div>
+                <div class="s-comment">
+                    <form method="POST" action="">
+                        {{ form.hidden_tag() }}
+                        <fieldset class="form-group">
+                            <p>Comment as <span>{{ current_user.username }}</span></p>
+                            <div class="form-group">
+                                {{ form.content.label(class="form-control-label") }}
+                                {% if form.content.errors %}
+                                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.content.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.content(class="form-control form-control-lg") }}
+                                {% endif %}
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-info") }}
+                        </div>
+                    </form>
+                </div>
+                <hr>
+                <div>
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <a href="#">{{ comment.author.username }}</a><span>{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</span>
+                            <p>{{ comment.content }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <!-- Modal -->

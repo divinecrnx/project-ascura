@@ -2,7 +2,7 @@ import secrets, os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from ascura import app, db, bcrypt
-from ascura.forms import FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
+from ascura.forms import CommentForm, FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
@@ -280,12 +280,33 @@ def new_post(school):
     return render_template('create_post.html', title=school.upper(),
                            form=form, legend=school.upper() + '- New Post', school_img=school_img)
 
-@app.route("/<string:school>/post/<int:post_id>")
+@app.route("/<string:school>/post/<int:post_id>", methods=['GET', 'POST'])
 def post(school, post_id):
     school_img = url_for('static', filename='images/' + school + 'logo.png')
-
+    form = CommentForm()
     post = Post.query.get_or_404(post_id)
-    return render_template('post.html', title=post.title, post=post, school_img=school_img)
+    comments = Comment.query.filter(Comment.post_id==post.id).all()
+
+    if form.validate_on_submit():
+        if school == 'scet':
+            s_id = 1
+        elif school == 'smart':
+            s_id = 2
+        elif school == 'sbm':
+            s_id = 3
+        elif school == 'shtm':
+            s_id = 4
+        elif school == 'saat':
+            s_id = 5
+        elif school == 'sss':
+            s_id = 6
+        comment = Comment(content=form.content.data, author=current_user, post_id=post.id, school_id=s_id)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Your comment has been posted!', 'success')
+        return redirect(url_for('post', school=post.school.school_name.lower(), post_id=post.id))
+
+    return render_template('post.html', title=post.title, post=post, school_img=school_img, form=form, comments=comments)
 
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
