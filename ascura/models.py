@@ -47,6 +47,7 @@ class Role(db.Model):
 class School(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     school_name = db.Column(db.String(5), nullable=False, unique=True)
+    school_name_full = db.Column(db.String(100), nullable=False, unique=True)
     student_school = db.relationship("User", backref='school', lazy=True)
     post_school = db.relationship("Post", backref='school', lazy=True)
     comment_school = db.relationship("Comment", backref='school', lazy=True)
