@@ -12,7 +12,6 @@ a:hover {
     margin-bottom: initial;
 }
 
-
 @font-face {
     font-family: Proxima-Bold;
     src: url(../proxima_ssv/Proxima\ Nova\ Bold.otf);
@@ -46,6 +45,10 @@ body {
     justify-content: space-between;
     height: 8vh;
     border-bottom: 1px solid rgb(19, 20, 33);
+}
+
+#main-container {
+    margin-bottom: 20px;
 }
 
 #logre-link {
@@ -111,106 +114,9 @@ body {
 }
 
 .std-div {
-    background-color: #1d1d44;
+    background-color: rgb(30, 32, 48);
     border-radius: 10px;
-}
-
-#profiles {
-    margin: 50px 100px 50px;
-    /* background-color: #a57373; */
-}
-
-.profile-row {
-    width: 100%;
-    /* display: flex;
-    justify-content: space-between; */
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1rem;
-}
-
-.profile-container {
-    height: 400px;
-    width: 260px;
-    background-color: #1d1d44;
-    /* background-color: #231E39; */
-    border-radius: 30px;
-    /* border: 1px solid #fff; */
-    position: relative;
-}
-
-.profile-pic {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15%;
-    position: relative;
-}
-
-.profile-pic > img {
-    width: 160px;
-    height: 160px;
-    border: 3px solid #fff;
-    /* background-image: url(./bg.jpg); */
-    /* border-top-left-radius: 30px;
-    border-top-right-radius: 30px; */
-}
-
-.school-role {
-    position: absolute;
-    bottom: -10px;
-    width: 100px;
-    color: #fff;
-    font-size: 12pt;
-    background-color: #93b930;
-    text-align: center;
-    /* font-family: Proxima-Regular; */
-}
-
-.mid-container {
-    margin: 20px 10% 10px;
-    font-family: Proxima-Regular;
-}
-
-.user-name {
-    color: #fff;
-    font-size: 18px;
-}
-
-.short-desc {
-    color: #b3b8cd;
-    font-size: 13px;
-    margin-top: 10px;    
-}
-
-.bottom-container {
-    position: absolute;
-    bottom: 25px;
-    margin-left: 10%;
-    margin-right: 10%;
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-}
-
-.bottom-container > button {
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-}
-
-button.connect {
-    background-image: linear-gradient(to right, #2e2459, #3d2459);
-    color: #fff;
-    cursor: pointer;
-    width: 100px;
-}
-
-button.commend {
-    border: 2px solid #2e2459;
-    background-color: #212129;
-    cursor: pointer;
-    color: #fff;
-    width: 100px;
+    border: 1px solid rgb(19, 20, 33);
 }
 
 #jumbotron-custom {
@@ -291,24 +197,28 @@ button.commend {
 }
 
 #wycd {
-    /* width: 100%; */
-    padding: 150px;
+    margin-top: 150px;
+    margin-bottom: 150px;
 }
 
 #wycd > div{
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding: 32px;
+    height: 300px;
 }
 
 .do-row {
     display: flex;
     justify-content: space-between;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    margin-bottom: 50px;
 }
 
 .d-left-content {
-    width: 40%;
+    width: 50%;
 }
 
 .d-left-content > h2 {
@@ -326,23 +236,25 @@ button.commend {
 
 .d-right-content {
     width: 50%;
-    display: flex;
-    justify-content: space-around;
-    height: 236px;
+}
+
+.d-right-content > .icon {
+    width: 100%;
+    height: 100%;
 }
 
 #footer {
     width: 100%;
-    background-color: #211a42;
+    background-color: #191b28;
     height: 10vh;
     text-align: center;
     align-items: center;
     display: flex;
     justify-content: center;
+    border-top: 1px solid rgb(19, 20, 33);
 }
 
 #footer > h4 {
-    /* padding-top: 20px; */
     color: #fff;
 }
 
@@ -380,4 +292,113 @@ button.commend {
 
 .lg-query > * {
     color: #fff;
+}
+
+#school-wall {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#school-content {
+    width: 290px;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    padding: 30px;
+    border-radius: 10px;
+    height: max-content;
+}
+
+#school-pp {
+    border: 1px solid rgb(19, 20, 33);
+    border-radius: 30px;
+}
+
+#school-title {
+    color: #fff;
+    margin-top: 10px;
+}
+
+.school-member-count {
+    color: initial;
+}
+
+#school-p-button {
+    margin-top: 10px;
+}
+
+#school-info {
+    width: 100%;
+}
+
+#school-info > hr {
+    background-color: rgb(200, 211, 245);
+    width: 70%;
+}
+
+.s-post {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.s-post-title {
+    color: #fff;
+}
+
+.s-post-stat {
+    color: #818384;
+    font-family: Proxima-Regular;
+}
+
+.s-post-c {
+    color: rgb(200, 211, 245);
+    font-family: Proxima-Regular;
+}
+
+.s-comment {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.p-comment {
+    color: #fff;
+}
+
+.p-comment-l {
+    color: #fff;
+}
+
+#comments-section {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment-author-info {
+    color: #fff;
+    margin-right: 10px;
 }

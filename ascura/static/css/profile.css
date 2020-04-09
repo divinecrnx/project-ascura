@@ -1,12 +1,20 @@
-#profiles {
+/* #profiles {
     margin: 50px 100px 50px;
-    /* background-color: #a57373; */
+} */
+
+#p-wrapper {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+
+#p-wrapper > hr {
+    background-color: #fff;
 }
 
 .profile-row {
     width: 100%;
-    /* display: flex;
-    justify-content: space-between; */
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 1rem;
@@ -15,17 +23,15 @@
 .profile-container {
     height: 400px;
     width: 260px;
-    background-color: #1d1d44;
-    /* background-color: #231E39; */
+    background-color: rgb(30, 32, 48);
     border-radius: 30px;
-    /* border: 1px solid #fff; */
     position: relative;
+    border: 1px solid rgb(19, 20, 33);
 }
 
 .profile-pic {
     display: flex;
     justify-content: space-around;
-    /* margin-top: 15%; */
     padding-top: 15%;
     position: relative;
 }
@@ -34,9 +40,6 @@
     width: 150px;
     height: 150px;
     border: 3px solid #fff;
-    /* background-image: url(./bg.jpg); */
-    /* border-top-left-radius: 30px;
-    border-top-right-radius: 30px; */
 }
 
 .school-role {
@@ -47,7 +50,6 @@
     font-size: 12pt;
     background-color: #93b930;
     text-align: center;
-    /* font-family: Proxima-Regular; */
 }
 
 .mid-container {
@@ -89,10 +91,18 @@ button.connect {
     width: 100px;
 }
 
-button.commend {
+/* button.commend {
     border: 2px solid #2e2459;
     background-color: #212129;
     cursor: pointer;
     color: #fff;
     width: 100px;
+} */
+
+.m-section {
+    color: #fff;
+}
+
+.m-section-out {
+    color: #fff;
 }

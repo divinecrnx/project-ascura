@@ -19,6 +19,9 @@
             </div>
             {% if current_user.is_authenticated %}
             <div>
+                <a href="{{ url_for('school_page', school=current_user.school.school_name|lower) }}">School</a>
+            </div>
+            <div>
                 <a href="{{ url_for('account') }}">Account</a>
             </div>
             {% endif %}

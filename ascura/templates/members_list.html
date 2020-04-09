@@ -2,49 +2,15 @@
 {% block body %}
     <!-- Main content -->
     <div id="main-container">
-        <!-- Rows of profiles will be shown in this div -->
-        <h1>Faculty Members</h1>
-        <div id="profiles">            
-            <!-- Row of limited profiles -->
-            <div class="profile-row">
-                {% for member in members %}
-                    {% if member.role_id == 4 or member.role_id == 5 or member.role_id == 6 %}
-                        <!-- Single profile -->
-                        <div class="profile-container">
-                            <div class="top-container">
-                                <div class="profile-pic">
-                                    <img src="{{ url_for('static', filename='images/profile_pics/' + member.image_file) }}" alt="Profile picture">
-                                    <div class="school-role">
-                                        <span>{{ member.role.role_name }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mid-container">
-                                <p class="user-name">{{ member.first_name }}</p>
-                                <p class="short-desc">{{ member.short_desc }}</p>
-                            </div>
-                            <div class="bottom-container">
-                                <button class="connect">Connect</button>
-                                <button class="commend">Commend</button>
-                            </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-        <h1>Students</h1>
-        <!-- Rows of profiles will be shown in this div -->
-        <div id="profiles">
-            {% for sem_num in range(7, 0, -1) %}
-                {% if sem_num == 7 %}
-                    <h1>Semester 6+</h1>
-                {% else %}
-                    <h1>Semester {{ sem_num }}</h1>
-                {% endif %}
+        <div id="p-wrapper">
+            <!-- Rows of profiles will be shown in this div -->
+            <h1 class="m-section m-section-out">Faculty Members</h1>
+            <hr>
+            <div id="profiles">            
                 <!-- Row of limited profiles -->
                 <div class="profile-row">
                     {% for member in members %}
-                        {% if member.semester|int == sem_num %}
+                        {% if member.role_id == 4 or member.role_id == 5 or member.role_id == 6 %}
                             <!-- Single profile -->
                             <div class="profile-container">
                                 <div class="top-container">
@@ -61,37 +27,75 @@
                                 </div>
                                 <div class="bottom-container">
                                     <button class="connect">Connect</button>
-                                    <button class="commend">Commend</button>
+                                    <!-- <button class="commend">Commend</button> -->
                                 </div>
                             </div>
-                        {% elif sem_num == 7 %}
-                            {# {% for member in members %} #}
-                                {% if member.semester == '6+' %}
-                                    <!-- Single profile -->
-                                    <div class="profile-container">
-                                        <div class="top-container">
-                                            <div class="profile-pic">
-                                                <img src="{{ url_for('static', filename='images/profile_pics/' + member.image_file) }}" alt="Profile picture">
-                                                <div class="school-role">
-                                                    <span>{{ member.role.role_name }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mid-container">
-                                            <p class="user-name">{{ member.first_name }}</p>
-                                            <p class="short-desc">{{ member.short_desc }}</p>
-                                        </div>
-                                        <div class="bottom-container">
-                                            <button class="connect">Connect</button>
-                                            <button class="commend">Commend</button>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {# {% endfor %} #}
                         {% endif %}
                     {% endfor %}
                 </div>
-            {% endfor %}
+            </div>
+            <h1 class="m-section m-section-out">Students</h1>
+            <hr>
+            <!-- Rows of profiles will be shown in this div -->
+            <div id="profiles">
+                {% for sem_num in range(7, 0, -1) %}
+                    {% if sem_num == 7 %}
+                        <h1 class="m-section">Semester 6+</h1>
+                    {% else %}
+                        <h1 class="m-section">Semester {{ sem_num }}</h1>
+                    {% endif %}
+                    <!-- Row of limited profiles -->
+                    <div class="profile-row">
+                        {% for member in members %}
+                            {% if member.semester|int == sem_num %}
+                                <!-- Single profile -->
+                                <div class="profile-container">
+                                    <div class="top-container">
+                                        <div class="profile-pic">
+                                            <img src="{{ url_for('static', filename='images/profile_pics/' + member.image_file) }}" alt="Profile picture">
+                                            <div class="school-role">
+                                                <span>{{ member.role.role_name }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mid-container">
+                                        <p class="user-name">{{ member.first_name }}</p>
+                                        <p class="short-desc">{{ member.short_desc }}</p>
+                                    </div>
+                                    <div class="bottom-container">
+                                        <button class="connect">Connect</button>
+                                        <!-- <button class="commend">Commend</button> -->
+                                    </div>
+                                </div>
+                            {% elif sem_num == 7 %}
+                                {# {% for member in members %} #}
+                                    {% if member.semester == '6+' %}
+                                        <!-- Single profile -->
+                                        <div class="profile-container">
+                                            <div class="top-container">
+                                                <div class="profile-pic">
+                                                    <img src="{{ url_for('static', filename='images/profile_pics/' + member.image_file) }}" alt="Profile picture">
+                                                    <div class="school-role">
+                                                        <span>{{ member.role.role_name }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mid-container">
+                                                <p class="user-name">{{ member.first_name }}</p>
+                                                <p class="short-desc">{{ member.short_desc }}</p>
+                                            </div>
+                                            <div class="bottom-container">
+                                                <button class="connect">Connect</button>
+                                                <!-- <button class="commend">Commend</button> -->
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {# {% endfor %} #}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock body %}
