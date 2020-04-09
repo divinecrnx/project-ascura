@@ -170,12 +170,13 @@ def school_page(school):
     new_post_link = url_for('new_post', school=school)
     school_id = get_school_id(school)
 
+    school_n = School.query.filter(School.id==school_id).first()
     students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
     lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
     posts = Post.query.filter(Post.school_id==school_id).all()
     comments = Comment.query.filter(Comment.school_id==school_id).all()
 
-    return render_template('school.html', title=school.upper(),\
+    return render_template('school.html', title=school.upper(), school_n=school_n,\
         student_num=len(students),\
         lecturer_num=len(lecturers),\
         school_img=school_img,\
@@ -210,6 +211,10 @@ def post(school, post_id):
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter(Comment.post_id==post.id).all()
     school_id = get_school_id(school)
+    school_n = School.query.filter(School.id==school_id).first()
+    
+    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
 
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, author=current_user, post_id=post.id, school_id=school_id)
@@ -218,7 +223,10 @@ def post(school, post_id):
         flash('Your comment has been posted!', 'success')
         return redirect(url_for('post', school=post.school.school_name.lower(), post_id=post.id))
 
-    return render_template('post.html', title=post.title, post=post, school_img=school_img, form=form, comments=comments)
+    return render_template('post.html', \
+        student_num=len(students),\
+        lecturer_num=len(lecturers),\
+        title=post.title, post=post, school_img=school_img, form=form, comments=comments, school_n=school_n)
 
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
