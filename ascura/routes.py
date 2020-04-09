@@ -192,6 +192,11 @@ def new_post(school):
     
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     school_id = get_school_id(school)
+    school_id = get_school_id(school)
+    school_n = School.query.filter(School.id==school_id).first()
+
+    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
 
     form = PostForm()
     if form.validate_on_submit():
@@ -201,8 +206,10 @@ def new_post(school):
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('school_page', school=school))
-    return render_template('create_post.html', title=school.upper(),
-                           form=form, legend=school.upper() + '- New Post', school_img=school_img)
+    return render_template('create_post.html', title=school.upper(), \
+        student_num=len(students),\
+        lecturer_num=len(lecturers),\
+        form=form, legend=school.upper() + '- New Post', school_img=school_img, school_n=school_n)
 
 @app.route("/<string:school>/post/<int:post_id>", methods=['GET', 'POST'])
 def post(school, post_id):

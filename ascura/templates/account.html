@@ -1,20 +1,23 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <!-- Single profile -->
-    <div class="profile-container">
-        <div class="top-container">
-            <div class="profile-pic">
-                <img src="{{ image_file }}" alt="Profile picture">
-                <div class="school-role">
-                    <span>{{ current_user.role.role_name }}</span>
+    <div id="form-wrapper" class="mt-5">
+        <!-- Single profile -->
+        <div class="profile-container">
+            <div class="top-container">
+                <div class="profile-pic">
+                    <img src="{{ image_file }}" alt="Profile picture">
+                    <div class="school-role">
+                        <span>{{ current_user.role.role_name }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mid-container">
-            <p class="user-name">{{ current_user.first_name + " " + current_user.last_name }}</p>
-            <p class="short-desc">{{ current_user.short_desc }}</p>
+            <div class="mid-container">
+                <p class="user-name">{{ current_user.first_name + " " + current_user.last_name }}</p>
+                <p class="short-desc">{{ current_user.short_desc }}</p>
+            </div>
         </div>
     </div>
+    
     <div id="form-wrapper" class="mt-5 mb-5">
         <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}

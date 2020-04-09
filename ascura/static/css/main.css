@@ -12,6 +12,10 @@ a:hover {
     margin-bottom: initial;
 }
 
+.t-text {
+    color: #fff;
+}
+
 @font-face {
     font-family: Proxima-Bold;
     src: url(../proxima_ssv/Proxima\ Nova\ Bold.otf);
