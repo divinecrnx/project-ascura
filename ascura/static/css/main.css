@@ -32,6 +32,10 @@ a {
     color: #fff;
 }
 
+#push-view {
+    min-height: calc(100vh - 61.833px - 77.3px);
+}
+
 #logo > h1 {
     color: #fff;
 }
