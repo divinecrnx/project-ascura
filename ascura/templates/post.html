@@ -9,20 +9,9 @@
     </style>
     <div id="main-container">
         <div id="school-wall">
-            <div id="school-content">
-                <img id="school-pp" src="{{ school_img }}" alt="">
-                <p id="school-title">{{ school_n.school_name_full }}</p>
-                <div class="school-member-count">
-                    <a class="school-m-count" href="{{ students_list_link }}">{{ student_num }}<span> students</span></a>
-                </div>
-                <div class="school-member-count">
-                    <a class="school-m-count" href="#">{{ lecturer_num }}<span> lecturers</span></a>
-                </div>
-                
-                <div id="school-p-button">
-                    <a href="{{ url_for('school_page', school=post.school.school_name|lower) }}" class="btn btn-outline-info btn-info-asc">Back to posts</a>
-                </div>
-            </div>
+            
+            {% include './includes/_school-content.html' %}
+
             <div id="school-info">                
                 <div class="s-post">
                     <h3 class="s-post-title">{{ post.title }}</h3>
@@ -74,12 +63,19 @@
                 </div>
                 <hr>
                 <div id="comments-section">
-                    {% for comment in comments %}
+                    {% if comments|length == 0%}
                         <div class="comment">
-                            <a href="#" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
-                            <p class="s-post-c">{{ comment.content }}</p>
+                            <p class="s-post-c s-post-c-middle">Wow, such empty ʕ•ᴥ•ʔ</p>
                         </div>
-                    {% endfor %}
+                    {% else %}
+                        {% for comment in comments %}
+                            <div class="comment">
+                                <a href="#" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
+                                <p class="s-post-c">{{ comment.content }}</p>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>

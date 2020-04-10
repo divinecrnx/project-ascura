@@ -1,0 +1,28 @@
+<div id="school-content">
+    <div id="school-pp-container">
+        <img id="school-pp" src="{{ school_img }}" alt="">
+    </div>
+    <p id="school-title">{{ school_n.school_name_full }}</p>
+    {% set total_members = student_num + lecturer_num %}
+    <div class="school-member-count">
+        <a class="school-m-count" href="{{ students_list_link }}">{{ student_num + lecturer_num }}<span> {{ 'members' if total_members > 1 or total_members == 0 else 'member'}}</span></a>
+    </div>
+    <!-- <div class="school-member-count">
+        <a class="school-m-count" href="{{ students_list_link }}">{{ student_num }}<span> students</span></a>
+    </div>
+    <div class="school-member-count">
+        <a class="school-m-count" href="{{ students_list_link }}">{{ lecturer_num }}<span> lecturers</span></a>
+    </div> -->
+    
+    {% if current_user.school.school_name == title %}
+        {% if is_post %}
+            <div id="school-p-button">
+                <a href="{{ url_for('school_page', school=school_n.school_name|lower) }}" class="btn btn-outline-info btn-info-asc">Back to posts</a>
+            </div>
+        {% else %}
+            <div id="school-p-button">
+                <a href="{{ new_post_link }}" class="btn btn-outline-info btn-info-asc">New Post</a>
+            </div>
+        {% endif %}
+    {% endif %}
+</div>

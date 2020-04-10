@@ -1,29 +1,19 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <style>
+    <!-- <style>
         #school-wall {
             display: flex;
             justify-content: center;
         }
-    </style>
+    </style> -->
     <div id="main-container">
         <div id="school-wall">
-            <div id="school-content">
-                <img id="school-pp" src="{{ school_img }}" alt="">
-                <p id="school-title">{{ school_n.school_name_full }}</p>
-                <div class="school-member-count">
-                    <a class="school-m-count" href="{{ students_list_link }}">{{ student_num }}<span> students</span></a>
-                </div>
-                <div class="school-member-count">
-                    <a class="school-m-count" href="{{ students_list_link }}">{{ lecturer_num }}<span> lecturers</span></a>
-                </div>
-                <div id="school-p-button">
-                    <a href="{{ url_for('school_page', school=school_n.school_name|lower) }}" class="btn btn-outline-info btn-info-asc">Back to posts</a>
-                </div>
-            </div>
+
+            {% include './includes/_school-content.html' %}
+
             <div id="school-info">
-                <div id="create-post">
+                <div id="create-post" class="std-div">
                     <form method="POST" action="">
                         {{ form.hidden_tag() }}
                         <fieldset class="form-group">

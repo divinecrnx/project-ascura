@@ -320,9 +320,16 @@ body {
     height: max-content;
 }
 
+#school-pp-container {
+    display: flex;
+    justify-content: center;
+}
+
 #school-pp {
     border: 1px solid rgb(19, 20, 33);
     border-radius: 30px;
+    height: 175px;
+    width: 175px;
 }
 
 #school-title {
@@ -372,6 +379,11 @@ body {
     font-family: Proxima-Regular;
 }
 
+.s-post-c-middle {
+    text-align: center;
+    margin-bottom: 0;
+}
+
 .s-comment {
     width: 80%;
     margin-left: auto;
@@ -403,7 +415,7 @@ body {
 }
 
 .comment {
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .comment-author-info {
