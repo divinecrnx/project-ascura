@@ -21,7 +21,11 @@ def registerl():
 
 @app.route("/about")
 def about():
-    return render_template('about.html')
+    students = User.query.filter(or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
+    lecturers = User.query.filter(or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+    posts = Post.query.all()
+    comments = Comment.query.all()
+    return render_template('about.html', title="About", students=len(students), lecturers=len(lecturers), posts=len(posts), comments=len(comments))
 
 # Function that takes in a school string and returns its id
 def get_school_id(school):

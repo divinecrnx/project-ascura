@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div id="main-container">
+    <div class="about-div std-div">
+        <h1>Ascura is how school members connect</h1>
+        <p>Developed by <a href="#">divinecrnx</a> for his final year project using <a href="https://flask.palletsprojects.com/en/1.1.x/">flask.</a> Hosted on <a href="https://www.heroku.com">Heroku</a>.</p>
+
+        <div class="db-stats">
+            <div class="db-stats-col">
+                <span>{{ students }}</span>
+                <span>{{ 'students' if students > 1 or students == 0 else 'student' }}</span>
+            </div>
+            <div class="db-stats-col db-stats-col-mid">
+                <span>{{ lecturers }}</span>
+                <span>{{ 'lecturers' if lecturers > 1 or lecturers == 0 else 'lecturer' }}</span>
+            </div>
+            <div class="db-stats-col">
+                <div class="db-stats-sub">
+                    <span>{{ posts }}</span>
+                    <span>{{ 'posts' if posts > 1 or posts == 0 else 'post' }}</span>
+                </div>
+                <div class="db-stats-sub">
+                    <span>{{ comments }}</span>
+                    <span>{{ 'comments' if comments > 1 or comments == 0 else 'comment' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
