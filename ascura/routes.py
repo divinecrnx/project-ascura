@@ -206,7 +206,7 @@ def new_post(school):
         db.session.commit()
         flash('Your post has been created!', 'success')
         return redirect(url_for('school_page', school=school))
-    return render_template('create_post.html', title=school.upper(), \
+    return render_template('create_post.html', title=school.upper(), is_post=True,\
         student_num=len(students),\
         lecturer_num=len(lecturers),\
         form=form, legend=school.upper() + '- New Post', school_img=school_img, school_n=school_n)
@@ -230,10 +230,10 @@ def post(school, post_id):
         flash('Your comment has been posted!', 'success')
         return redirect(url_for('post', school=post.school.school_name.lower(), post_id=post.id))
 
-    return render_template('post.html', \
+    return render_template('post.html', is_post=True,\
         student_num=len(students),\
         lecturer_num=len(lecturers),\
-        title=post.title, post=post, school_img=school_img, form=form, comments=comments, school_n=school_n)
+        title=school.upper(), p_title=post.title, post=post, school_img=school_img, form=form, comments=comments, school_n=school_n)
 
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
