@@ -13,6 +13,9 @@
             </div>
             {% if current_user.is_authenticated %}
             <div>
+                <a href="{{ url_for('user_page', username=current_user.username) }}">Profile</a>
+            </div>
+            <div>
                 <a href="{{ url_for('school_page', school=current_user.school.school_name|lower) }}">School</a>
             </div>
             <div>
