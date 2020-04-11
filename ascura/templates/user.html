@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="user-profile std-div">
+        <div class="user-about-left">
+            <div class="user-pp">
+                <img src="{{ url_for('static', filename='images/profile_pics/' + user.image_file) }}" alt="{{ user.username }} profile picture">
+            </div>
+            <div class="user-names">
+                <div class="user-username-fullname">
+                    <span class="fn">{{ user.first_name + " " + user.last_name }}</span>
+                    <span class="un">&commat;{{ user.username }}</span>
+                </div>
+            </div>
+            <div class="edu-particulars">
+                <div class="user-school">
+                    {{ user.school.school_name }}
+                </div>
+                <div class="user-role">
+                    {{ user.role.role_name }}
+                </div>
+            </div>
+        </div>
+        <div class="user-about-right">
+            <div class="user-longdesc">
+                {{ user.long_desc }}
+            </div>
+            <div class="user-interests">
+                {{ user.interests }}
+            </div>
+        </div>
+    </div>
+    <div class="user-activity-tabs std-div user-profile">
+        {% if not if_comments %}
+            <div class="posts-link tab-active">
+                <a href="{{ url_for('user_page', username=user.username) }}">Posts</a>
+            </div>
+            <div class="comments-link">
+                <a href="{{ url_for('user_page', username=user.username, tab='comments') }}">Comments</a>
+            </div>
+        {% else %}
+            <div class="posts-link">
+                <a href="{{ url_for('user_page', username=user.username) }}">Posts</a>
+            </div>
+            <div class="comments-link tab-active">
+                <a href="{{ url_for('user_page', username=user.username, tab='comments') }}">Comments</a>
+            </div>
+        {% endif %}
+        
+    </div>
+    <div class="user-activity">
+        {% if not if_comments %}
+            {% for post in posts %}
+                <div class="s-post">
+                    <h3><a href="{{ url_for('post', school=post.school.school_name|lower, post_id=post.id) }}">{{ post.title }}</a></h3>
+                    <small class="s-post-stat" >{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
+                    <p class="s-post-c" >{{ post.content }}</p>
+                    {% set comments_count = [] %}
+                    {% for comment in comments %}
+                        {% if comment.post.id == post.id %}
+                            {{ comments_count.append(comment) or "" }}
+                        {% endif %}
+                    {% endfor %}
+                    {% if comments_count|length == 1 %}
+                        <small class="s-post-stat">{{ comments_count|length }} Comment</small>
+                    {% elif comments_count|length == 0 %}
+                        <small class="s-post-stat">No Comments</small>
+                    {% else %}
+                        <small class="s-post-stat">{{ comments_count|length }} Comments</small>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div id="comments-section">
+                {% if comments|length == 0%}
+                    <div class="comment">
+                        <p class="s-post-c s-post-c-middle">Wow, such empty ʕ•ᴥ•ʔ</p>
+                    </div>
+                {% else %}
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <a href="#" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
+                            <p class="s-post-c">{{ comment.content }}</p>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,7 +1,3 @@
-/* #profiles {
-    margin: 50px 100px 50px;
-} */
-
 #p-wrapper {
     width: 80%;
     margin-left: auto;
@@ -91,18 +87,85 @@ button.connect {
     width: 100px;
 }
 
-/* button.commend {
-    border: 2px solid #2e2459;
-    background-color: #212129;
-    cursor: pointer;
-    color: #fff;
-    width: 100px;
-} */
-
 .m-section {
     color: #fff;
 }
 
 .m-section-out {
     color: #fff;
+}
+
+.user-profile {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    height: max-content;
+    padding: 20px;
+}
+
+.user-about-left {
+    width: 20%;
+    height: max-content;
+}
+
+.user-about-left > div {
+    margin-bottom: 10px;
+}
+
+div.user-school, div.user-role {
+    margin-bottom: 0;
+}
+
+.user-names, .edu-particulars {
+    line-height: 1.2;
+}
+
+.user-pp > img {
+    height: 150px;
+    width: 150px;
+}
+
+.un {
+    color: rgb(200, 211, 245);
+}
+
+.user-about-right {
+    width: 80%;
+}
+
+.user-activity {
+    width: 70%;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.user-activity > div.s-post, .user-activity > div#comments-section {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.user-activity-tabs {
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.user-activity-tabs > div {
+    width: 48%;
+}
+
+.posts-link > a, .comments-link > a {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.tab-active {
+    border-bottom: 2px solid rgb(130, 170, 255);
 }

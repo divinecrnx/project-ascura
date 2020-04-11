@@ -12,6 +12,15 @@ from sqlalchemy import or_, and_
 def home():
     return render_template('index.html')
 
+@app.route("/user/<string:username>")
+@login_required
+def user_page(username):
+    if_comments = True if request.args.get('tab') == 'comments' else False
+    user = User.query.filter(User.username==username).first_or_404()
+    posts = Post.query.filter(Post.author==user).all()
+    comments = Comment.query.filter(Comment.author==user).all()
+    return render_template('user.html', user=user, posts=posts, comments=comments, if_comments=if_comments)
+
 @app.route("/register")
 def registerl():
     if current_user.is_authenticated:
