@@ -116,6 +116,10 @@ button.connect {
     margin-bottom: 10px;
 }
 
+.user-username-fullname > span {
+    display: block;
+}
+
 div.user-school, div.user-role {
     margin-bottom: 0;
 }
@@ -168,4 +172,23 @@ div.user-school, div.user-role {
 
 .tab-active {
     border-bottom: 2px solid rgb(130, 170, 255);
+}
+
+.user-pagination {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    padding: 10px 10px;
+    margin-bottom: 15px;
+}
+
+.user-pagination > div {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.comment-link > .comment:hover {
+    background-color: #282b44;
 }

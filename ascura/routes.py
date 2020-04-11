@@ -15,11 +15,16 @@ def home():
 @app.route("/user/<string:username>")
 @login_required
 def user_page(username):
-    if_comments = True if request.args.get('tab') == 'comments' else False
+    if_comments = True if request.args.get('tab', type=str) == 'comments' else False
     user = User.query.filter(User.username==username).first_or_404()
-    posts = Post.query.filter(Post.author==user).all()
-    comments = Comment.query.filter(Comment.author==user).all()
-    return render_template('user.html', user=user, posts=posts, comments=comments, if_comments=if_comments)
+
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.filter(Comment.author==user).order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
+    comments = Comment.query.filter(Comment.author==user).order_by(Comment.date_posted.desc()).paginate(page=page, per_page=5)
+
+    # posts = Post.query.filter(Post.author==user).all()
+    # comments = Comment.query.filter(Comment.author==user).all()
+    return render_template('user.html', user=user, posts=posts, comments=comments, if_comments=if_comments, page=page)
 
 @app.route("/register")
 def registerl():

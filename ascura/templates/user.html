@@ -20,6 +20,9 @@
                     {{ user.role.role_name }}
                 </div>
             </div>
+            <div class="user-p-edit">
+                <a href="{{ url_for('account') }}">Edit profile</a>
+            </div>
         </div>
         <div class="user-about-right">
             <div class="user-longdesc">
@@ -50,41 +53,65 @@
     </div>
     <div class="user-activity">
         {% if not if_comments %}
-            {% for post in posts %}
-                <div class="s-post">
-                    <h3><a href="{{ url_for('post', school=post.school.school_name|lower, post_id=post.id) }}">{{ post.title }}</a></h3>
-                    <small class="s-post-stat" >{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
-                    <p class="s-post-c" >{{ post.content }}</p>
-                    {% set comments_count = [] %}
-                    {% for comment in comments %}
-                        {% if comment.post.id == post.id %}
-                            {{ comments_count.append(comment) or "" }}
-                        {% endif %}
-                    {% endfor %}
-                    {% if comments_count|length == 1 %}
-                        <small class="s-post-stat">{{ comments_count|length }} Comment</small>
-                    {% elif comments_count|length == 0 %}
-                        <small class="s-post-stat">No Comments</small>
-                    {% else %}
-                        <small class="s-post-stat">{{ comments_count|length }} Comments</small>
-                    {% endif %}
+            {% if posts.items|length == 0%}
+                <div id="comments-section" class="comments-section-opt">
+                    <div class="comment">
+                        <p class="s-post-c s-post-c-middle">Wow, such empty ʕ•ᴥ•ʔ</p>
+                    </div>
                 </div>
-            {% endfor %}
+            {% else %}
+                {% for post in posts.items %}
+                    <div class="s-post">
+                        <h3><a href="{{ url_for('post', school=post.school.school_name|lower, post_id=post.id) }}">{{ post.title }}</a></h3>
+                        <small class="s-post-stat" >{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
+                        <p class="s-post-c" >{{ post.content }}</p>
+                        {% set comments_count = [] %}
+                        {% for comment in comments.items %}
+                            {% if comment.post.id == post.id %}
+                                {{ comments_count.append(comment) or "" }}
+                            {% endif %}
+                        {% endfor %}
+                        {% if comments_count|length == 1 %}
+                            <small class="s-post-stat">{{ comments_count|length }} Comment</small>
+                        {% elif comments_count|length == 0 %}
+                            <small class="s-post-stat">No Comments</small>
+                        {% else %}
+                            <small class="s-post-stat">{{ comments_count|length }} Comments</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% else %}
-            <div id="comments-section">
-                {% if comments|length == 0%}
+            <div id="comments-section" class="comments-section-opt">
+                {% if comments.items|length == 0%}
                     <div class="comment">
                         <p class="s-post-c s-post-c-middle">Wow, such empty ʕ•ᴥ•ʔ</p>
                     </div>
                 {% else %}
-                    {% for comment in comments %}
+                    {% for comment in comments.items %}
+                    <a href="{{ url_for('post', school=comment.school.school_name|lower, post_id=comment.post.id) }}" class="comment-link">
                         <div class="comment">
-                            <a href="#" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
-                            <p class="s-post-c">{{ comment.content }}</p>
+                                <span class="comment-author-info">{{ comment.author.username }}</span><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small>
+                                <p class="s-post-c">{{ comment.content }}</p>
                         </div>
+                    </a>
                     {% endfor %}
                 {% endif %}
             </div>
         {% endif %}
     </div>
+    {% if posts.pages > 1 %}
+        <div class="std-div user-pagination">
+            {% if page > 1 %}
+                <div class="page-previous">
+                    <a href="{{ url_for('user_page', username=user.username) }}">‹ prev</a>
+                </div>
+            {% endif %}
+            {% if page < posts.pages %}
+                <div class="page-next">
+                    <a href="{{ url_for('user_page', username=user.username) }}">next ›</a>
+                </div>    
+            {% endif %}
+        </div>
+    {% endif %}
 {% endblock %}
