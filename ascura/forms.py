@@ -227,7 +227,7 @@ class LoginForm(FlaskForm):
 
 class UpdateStudentProfileForm(FlaskForm):
     short_desc = StringField('Short description', validators=[Length(max=70)])
-    long_desc = TextAreaField('Long description', validators=[Length(max=150)])
+    long_desc = TextAreaField('Long description')
     interests = StringField('Interests', validators=[Length(max=100)])
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update profile')
