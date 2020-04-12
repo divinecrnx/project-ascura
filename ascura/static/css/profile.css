@@ -192,3 +192,11 @@ div.user-school, div.user-role {
 .comment-link > .comment:hover {
     background-color: #282b44;
 }
+
+.profile-statuses {
+    height: max-content;
+    padding: 30px;
+    background-color: rgb(30, 32, 48);
+    border: 1px solid rgb(19, 20, 33);
+    border-radius: 10px;
+}

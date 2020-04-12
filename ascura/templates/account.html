@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block body %}
-    <div id="form-wrapper" class="mt-5">
+    <div class="mt-5 acc-top">
         <!-- Single profile -->
         <div class="profile-container">
             <div class="top-container">
@@ -16,51 +16,153 @@
                 <p class="short-desc">{{ current_user.short_desc }}</p>
             </div>
         </div>
-    </div>
-    
-    <div id="form-wrapper" class="mt-5 mb-5">
-        <form method="POST" action="" enctype="multipart/form-data">
-            {{ form.hidden_tag() }}
-            <fieldset class="form-group">
-                <legend class="mb-4">Account Information</legend>
-                <div class="form-group">
-                    {{ form.semester.label(class="form-control-label") }}
-                    {% if form.semester.errors %}
-                        {{ form.semester(class="form-control form-control-asc is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.semester.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
+        <form method="POST" action="{{ url_for('account_update', formtype='profile') }}" enctype="multipart/form-data" class="acc-stat-form">
+            {{ form_prof.hidden_tag() }}
+            <div class="profile-statuses">
+                <fieldset class="form-group">
+                    <div class="profile-descs">
+                        <div class="form-group">
+                            {{ form_prof.short_desc.label(class="form-control-label") }}
+                            {% if form_prof.short_desc.errors %}
+                                {{ form_prof.short_desc(class="form-control form-control-asc is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_prof.short_desc.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_prof.short_desc(class="form-control form-control-asc") }}
+                            {% endif %}
                         </div>
-                    {% else %}
-                        {{ form.semester(class="form-control form-control-asc") }}
+                        <div class="form-group">
+                            {{ form_prof.long_desc.label(class="form-control-label") }}
+                            {% if form_prof.long_desc.errors %}
+                                {{ form_prof.long_desc(class="form-control form-control-asc is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_prof.long_desc.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_prof.long_desc(class="form-control form-control-asc") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="profile-interests">
+                        <div class="form-group">
+                            {{ form_prof.interests.label(class="form-control-label") }}
+                            {% if form_prof.interests.errors %}
+                                {{ form_prof.interests(class="form-control form-control-asc is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form_prof.interests.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form_prof.interests(class="form-control form-control-asc") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    {{ form_prof.picture.label() }}
+                    {{ form_prof.picture(class="form-control-file") }}
+                    {% if form_prof.picture.errors %}
+                        {% for error in form_prof.picture.errors %}
+                            <span class="text-danger">{{ error }}</span></br>
+                        {% endfor %}
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.email.label(class="form-control-label") }}
-                    {% if form.email.errors %}
-                        {{ form.email(class="form-control form-control-asc is-invalid") }}
+                    {{ form_prof.submit(class="btn btn-outline-info btn-info-asc") }}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="form-wrapper" class="mt-5 mb-5">
+        <form method="POST" action="{{ url_for('account_update', formtype='account') }}">
+            {{ form_acc.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="mb-4">Account Information</legend>
+                <div class="form-group">
+                    {{ form_acc.semester.label(class="form-control-label") }}
+                    {% if form_acc.semester.errors %}
+                        {{ form_acc.semester(class="form-control form-control-asc is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.email.errors %}
+                            {% for error in form_acc.semester.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.email(class="form-control form-control-asc") }}
+                        {{ form_acc.semester(class="form-control form-control-asc") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form_acc.email.label(class="form-control-label") }}
+                    {% if form_acc.email.errors %}
+                        {{ form_acc.email(class="form-control form-control-asc is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_acc.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form_acc.email(class="form-control form-control-asc") }}
                     {% endif %}
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.picture.label() }}
-                {{ form.picture(class="form-control-file") }}
-                {% if form.picture.errors %}
-                    {% for error in form.picture.errors %}
-                        <span class="text-danger">{{ error }}</span></br>
-                    {% endfor %}
-                {% endif %}
+                {{ form_acc.submit(class="btn btn-outline-info btn-info-asc") }}
             </div>
+        </form>
+    </div>
+    <div id="form-wrapper" class="mt-5 mb-5">
+        <form method="POST" action="{{ url_for('account_update', formtype='password') }}">
+            {{ form_pass.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="mb-4">Change password</legend>
+                <div class="form-group">
+                    {{ form_pass.old_password.label(class="form-control-label") }}
+                    {% if form_pass.old_password.errors %}
+                        {{ form_pass.old_password(class="form-control form-control-asc is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_pass.old_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form_pass.old_password(class="form-control form-control-asc") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form_pass.password.label(class="form-control-label") }}
+                    {% if form_pass.password.errors %}
+                        {{ form_pass.password(class="form-control form-control-asc is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_pass.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form_pass.password(class="form-control form-control-asc") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form_pass.confirm_password.label(class="form-control-label") }}
+                    {% if form_pass.confirm_password.errors %}
+                        {{ form_pass.confirm_password(class="form-control form-control-asc is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_pass.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form_pass.confirm_password(class="form-control form-control-asc") }}
+                    {% endif %}
+                </div>
+            </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info btn-info-asc") }}
+                {{ form_pass.submit(class="btn btn-outline-info btn-info-asc") }}
             </div>
         </form>
     </div>

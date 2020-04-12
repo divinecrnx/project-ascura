@@ -225,6 +225,13 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+class UpdateStudentProfileForm(FlaskForm):
+    short_desc = StringField('Short description', validators=[Length(max=70)])
+    long_desc = TextAreaField('Long description', validators=[Length(max=150)])
+    interests = StringField('Interests', validators=[Length(max=100)])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Update profile')
+
 class UpdateStudentAccountForm(FlaskForm):
     semester = SelectField('Semester', validators=[DataRequired()], choices=\
         [('1', '1'),\
@@ -235,14 +242,19 @@ class UpdateStudentAccountForm(FlaskForm):
         ('6', '6'),\
         ('6+', '6+')])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Update')
+    submit = SubmitField('Update account')
 
     def validate_email(self, email):
         if email.data != current_user.email:
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
+
+class UpdateStudentPasswordForm(FlaskForm):
+    old_password = PasswordField('Old password')
+    password = PasswordField('New password')
+    confirm_password = PasswordField('Confirm new password', validators=[EqualTo('password')])
+    submit = SubmitField('Update password')
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])

@@ -2,7 +2,7 @@ import secrets, os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from ascura import app, db, bcrypt
-from ascura.forms import CommentForm, FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, PostForm
+from ascura.forms import CommentForm, FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, UpdateStudentProfileForm, UpdateStudentPasswordForm, PostForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
@@ -152,24 +152,60 @@ def save_picture(form_picture): # Resizes an uploaded profile picture
 
     return picture_fn
 
-@app.route("/account", methods=['GET', 'POST'])
+@app.route("/account", methods=['GET'])
 @login_required
 def account():
-    form = UpdateStudentAccountForm()
-    if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+    form_prof = UpdateStudentProfileForm()
+    form_acc = UpdateStudentAccountForm()
+    form_pass = UpdateStudentPasswordForm()
+
+    # if request.method == 'GET':
+    form_acc.email.data = current_user.email
+    form_acc.semester.data = current_user.semester
+    form_prof.short_desc.data = current_user.short_desc
+    form_prof.long_desc.data = current_user.long_desc
+    form_prof.interests.data = current_user.interests
+    
+    image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
+    return render_template('account.html', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass)
+
+@app.route("/account/update/<string:formtype>", methods=['POST'])
+@login_required
+def account_update(formtype):
+    form_prof = UpdateStudentProfileForm()
+    form_acc = UpdateStudentAccountForm()
+    form_pass = UpdateStudentPasswordForm()
+
+    if formtype == 'profile' and form_prof.validate_on_submit():
+        current_user.short_desc = form_prof.short_desc.data
+        current_user.long_desc = form_prof.long_desc.data
+        current_user.interests = form_prof.interests.data
+        if form_prof.picture.data:
+            picture_file = save_picture(form_prof.picture.data)
             current_user.image_file = picture_file
-        current_user.email = form.email.data
-        current_user.semester = form.semester.data
+        db.session.commit()
+        flash('Your profile has been updated!', 'success')
+        return redirect(url_for('account'))
+    elif formtype == 'account' and form_acc.validate_on_submit():
+        current_user.email = form_acc.email.data
+        current_user.semester = form_acc.semester.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
-    elif request.method == 'GET':
-        form.email.data = current_user.email
-        form.semester.data = current_user.semester
-    image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
-    return render_template('account.html', title='Account', image_file=image_file, form=form)
+    elif formtype == 'password' and form_pass.validate_on_submit():
+        if form_pass.old_password.data and bcrypt.check_password_hash(current_user.password, form_pass.old_password.data):
+            hashed_password = bcrypt.generate_password_hash(form_pass.password.data).decode('utf-8')
+            current_user.password = hashed_password
+            db.session.commit()
+            flash('Your password has been updated!', 'success')
+            return redirect(url_for('account'))
+        else:
+            flash('Old password was incorrect, please try again.', 'danger')
+            return redirect(url_for('account'))
+    else:
+        image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
+        return redirect(url_for('account', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass))
+
 
 @app.route("/<string:school>/members", methods=['GET'])
 @login_required

@@ -12,6 +12,10 @@ a:hover {
     margin-bottom: initial;
 }
 
+label {
+    color: #fff;
+}
+
 .t-text {
     color: #fff;
 }
@@ -487,3 +491,15 @@ body {
 .db-stats-sub > span {
     display: block;
 } */
+
+.acc-top {
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.acc-stat-form {
+    width: 60%;
+}
