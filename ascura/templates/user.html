@@ -20,9 +20,11 @@
                     {{ user.role.role_name }}
                 </div>
             </div>
+            {% if user.username == current_user.username %}
             <div class="user-p-edit">
                 <a href="{{ url_for('account') }}">Edit profile</a>
             </div>
+            {% endif %}
         </div>
         <div class="user-about-right">
             <div class="user-longdesc">
