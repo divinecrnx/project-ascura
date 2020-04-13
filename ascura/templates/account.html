@@ -6,9 +6,31 @@
             <div class="top-container">
                 <div class="profile-pic">
                     <img src="{{ image_file }}" alt="Profile picture">
-                    <div class="school-role">
-                        <span>{{ current_user.role.role_name }}</span>
-                    </div>
+                    {% if current_user.role.role_name == 'Student' %}
+                        <div class="school-role school-role-student">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% elif current_user.role.role_name == 'Vice Chairman' %}
+                        <div class="school-role school-role-vice-chairman">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% elif current_user.role.role_name == 'Chairman' %}
+                        <div class="school-role school-role-chairman">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% elif current_user.role.role_name == 'Lecturer' %}
+                        <div class="school-role school-role-lecturer">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% elif current_user.role.role_name == 'HOP' %}
+                        <div class="school-role school-role-hop">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% elif current_user.role.role_name == 'Dean' %}
+                        <div class="school-role school-role-dean">
+                            <span>{{ current_user.role.role_name }}</span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="mid-container">

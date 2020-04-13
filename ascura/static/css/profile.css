@@ -14,6 +14,8 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .profile-container {
@@ -44,8 +46,31 @@
     width: 100px;
     color: #fff;
     font-size: 12pt;
-    background-color: #93b930;
     text-align: center;
+}
+
+.school-role-student {
+    background-color: #30acb9;
+}
+
+.school-role-vice-chairman {
+    background-color: #30b979;
+}
+
+.school-role-chairman {
+    background-color: #93b930;
+}
+
+.school-role-lecturer {
+    background-color: #5430b9;
+}
+
+.school-role-hop {
+    background-color: #9530b9;
+}
+
+.school-role-dean {
+    background-color: #b93030;
 }
 
 .mid-container {
