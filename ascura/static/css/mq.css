@@ -6,6 +6,9 @@
         width: 90%;
         display: block;
     }
+    .d-left-content {
+        width: 100%;
+    }
     .d-right-content {
         display: none;
     }
@@ -85,5 +88,39 @@
     }
     .school-elem > a {
         padding: 10px 20px;
+    }
+    .db-stats {
+        flex-direction: column;
+    }
+    .db-stats-col-mid {
+        border-top: 1px solid rgb(200, 211, 245);
+        border-bottom: 1px solid rgb(200, 211, 245);
+        border-left: none;
+        border-right: none;
+    }
+    #jumbowrapper-custom {
+        width: 100%;
+        padding: 10px;
+    }
+    #jumbo-logo-custom {
+        width: 100%;
+    }
+    #jumbo-logo-custom > h1 {
+        font-size: 42pt;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    #jumbo-desc {
+        width: 100%;
+    }
+    #jumbo-buttons {
+        width: 100%;
+        flex-direction: column;
+    }
+    #jumbo-buttons > a {
+        margin-bottom: 10px;
+    }
+    #school-list {
+        padding: 10px;
     }
 }
