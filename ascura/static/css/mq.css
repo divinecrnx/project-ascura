@@ -173,4 +173,16 @@
         margin-top: 0;
         margin-bottom: 0;
     }
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+    .modal-footer > form {
+        width: 100%;
+    }
+    .modal-footer > form > input {
+        padding: 10px;
+    }
+    .modal-footer > button {
+        padding: 10px;
+    }
 }
