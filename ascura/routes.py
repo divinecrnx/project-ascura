@@ -159,7 +159,6 @@ def account():
     form_acc = UpdateStudentAccountForm()
     form_pass = UpdateStudentPasswordForm()
 
-    # if request.method == 'GET':
     form_acc.email.data = current_user.email
     form_acc.semester.data = current_user.semester
     form_prof.short_desc.data = current_user.short_desc
@@ -172,9 +171,9 @@ def account():
 @app.route("/account/update/<string:formtype>", methods=['POST'])
 @login_required
 def account_update(formtype):
-    form_prof = UpdateStudentProfileForm()
-    form_acc = UpdateStudentAccountForm()
-    form_pass = UpdateStudentPasswordForm()
+    form_prof = UpdateStudentProfileForm(request.form)
+    form_acc = UpdateStudentAccountForm(request.form)
+    form_pass = UpdateStudentPasswordForm(request.form)
 
     if formtype == 'profile' and form_prof.validate_on_submit():
         current_user.short_desc = form_prof.short_desc.data
@@ -203,8 +202,9 @@ def account_update(formtype):
             flash('Old password was incorrect, please try again.', 'danger')
             return redirect(url_for('account'))
     else:
+        print("Errors:", form_prof.long_desc.errors)
         image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
-        return redirect(url_for('account', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass))
+        return render_template('account.html', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass)
 
 
 @app.route("/<string:school>/members", methods=['GET'])

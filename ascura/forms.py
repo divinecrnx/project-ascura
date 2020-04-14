@@ -232,6 +232,11 @@ class UpdateStudentProfileForm(FlaskForm):
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update profile')
 
+    def validate_long_desc(self, long_desc):
+        if len(long_desc.data) > 450:
+            raise ValidationError('Your description was too long. People are likely to read your description if it was a bit shorter. Try again with less than 450 words.')
+            # raise ValidationError('Must be less than 450')
+
 class UpdateStudentAccountForm(FlaskForm):
     semester = SelectField('Semester', validators=[DataRequired()], choices=\
         [('1', '1'),\
