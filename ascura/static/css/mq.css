@@ -1,4 +1,39 @@
 @media (orientation: portrait) {
+    #header {
+    flex-direction: column;
+    height: max-content;
+    }
+    #right-h-content {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+    }
+    #main-nav-links {
+        display: block;
+        text-align: center;
+    }
+    #main-nav-links > div {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #main-nav-links > div > a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: block;
+    }
+    #logre-link {
+        padding: 0;
+        border: none;
+        display: block;
+        margin-top: 20px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-radius: 0;
+    }
+    #login-register {
+        text-align: center;
+    }
     #wycd > div {
         height: max-content;
     }

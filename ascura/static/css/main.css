@@ -60,7 +60,6 @@ body {
     padding: 10px 15px;
     background-color: #191b28;
     display: flex;
-    overflow: hidden;
     justify-content: space-between;
     height: 8vh;
     border-bottom: 1px solid rgb(19, 20, 33);
