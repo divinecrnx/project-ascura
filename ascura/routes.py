@@ -23,8 +23,6 @@ def user_page(username):
     posts = Post.query.filter(Post.author==user).order_by(Post.date_posted.desc()).paginate(page=p_page, per_page=5)
     comments = Comment.query.filter(Comment.author==user).order_by(Comment.date_posted.desc()).paginate(page=c_page, per_page=5)
 
-    # posts = Post.query.filter(Post.author==user).all()
-    # comments = Comment.query.filter(Comment.author==user).all()
     return render_template('user.html', user=user, posts=posts, comments=comments, if_comments=if_comments, p_page=p_page, c_page=c_page)
 
 @app.route("/register")
@@ -236,7 +234,6 @@ def school_page(school):
     school_n = School.query.filter(School.id==school_id).first()
     members = User.query.filter(User.school_id==school_id).all()
     posts = Post.query.filter(Post.school_id==school_id).order_by(Post.date_posted.desc()).paginate(page=page, per_page=10)
-    # posts = Post.query.filter(Post.school_id==school_id).all()
     comments = Comment.query.filter(Comment.school_id==school_id).all()
 
     return render_template('school.html', title=school.upper(), school_n=school_n,\
