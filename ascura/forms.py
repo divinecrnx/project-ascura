@@ -226,16 +226,26 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class UpdateStudentProfileForm(FlaskForm):
-    short_desc = StringField('Short description', validators=[Length(max=70)])
+    short_desc = StringField('Short description')
     long_desc = TextAreaField('Long description')
-    interests = StringField('Interests', validators=[Length(max=100)])
+    interests = StringField('Interests')
     picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update profile')
 
+    def validate_short_desc(self, short_desc):
+        limit = 70
+        if len(short_desc.data) > limit:
+            raise ValidationError('Your description was too long. Try again with less than ' + str(limit) + ' words.')
+
     def validate_long_desc(self, long_desc):
-        if len(long_desc.data) > 450:
-            raise ValidationError('Your description was too long. People are likely to read your description if it was a bit shorter. Try again with less than 450 words.')
-            # raise ValidationError('Must be less than 450')
+        limit = 450
+        if len(long_desc.data) > limit:
+            raise ValidationError('Your description was too long. People are likely to read your description if it was a bit shorter. Try again with less than ' + str(limit) + ' words.')
+
+    def validate_interests(self, interests):
+        limit = 100
+        if len(interests.data) > limit:
+            raise ValidationError('You specified too many interests. Please keep them short and brief and with less than ' + str(limit) + ' characters.')
 
 class UpdateStudentAccountForm(FlaskForm):
     semester = SelectField('Semester', validators=[DataRequired()], choices=\

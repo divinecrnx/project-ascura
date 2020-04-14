@@ -202,7 +202,14 @@ def account_update(formtype):
             flash('Old password was incorrect, please try again.', 'danger')
             return redirect(url_for('account'))
     else:
-        print("Errors:", form_prof.long_desc.errors)
+        if formtype == 'profile':
+            form_acc.email.data = current_user.email
+            form_acc.semester.data = current_user.semester
+        else:
+            form_prof.short_desc.data = current_user.short_desc
+            form_prof.long_desc.data = current_user.long_desc
+            form_prof.interests.data = current_user.interests
+        flash('Oops, one of the fields had an error. Scroll down to see what caused it.', 'danger')
         image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
         return render_template('account.html', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass)
 
