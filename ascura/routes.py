@@ -7,6 +7,14 @@ from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', title='Not found'), 404
+
+@app.errorhandler(403)
+def page_not_found(e):
+    return render_template('403.html', title='No permission'), 403
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -40,6 +48,17 @@ def about():
     comments = Comment.query.all()
     return render_template('about.html', title="About", students=len(students), lecturers=len(lecturers), posts=len(posts), comments=len(comments))
 
+# Function that determines if a route's school input is valid
+def determine_school(school):
+
+    schools = ['scet', 'smart', 'sbm', 'shtm', 'saat', 'sss']
+
+    if school in schools:
+        return True
+    else:
+        return False
+        
+
 # Function that takes in a school string and returns its id
 def get_school_id(school):
     if school == 'scet':
@@ -60,6 +79,10 @@ def get_school_id(school):
 
 @app.route("/register/student/<string:school>", methods=['GET', 'POST'])
 def register(school):
+
+    if not determine_school(school):
+        return redirect(url_for('home'))
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     if school == 'scet':
@@ -94,6 +117,10 @@ def register(school):
 @app.route("/register/faculty/<string:school>", methods=['GET', 'POST'])
 @login_required
 def register_faculty(school):
+    
+    if not determine_school(school):
+        return redirect(url_for('home'))
+    
     form = FacultyRegistrationForm()
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -216,6 +243,10 @@ def account_update(formtype):
 @app.route("/<string:school>/members", methods=['GET'])
 @login_required
 def school_s_list(school):
+    
+    if not determine_school(school):
+        return redirect(url_for('home'))
+    
     school_id = get_school_id(school)
     members = User.query.filter_by(school_id=school_id).all()
 
@@ -224,6 +255,9 @@ def school_s_list(school):
 @app.route("/<string:school>", methods=['GET'])
 @login_required
 def school_page(school):
+    
+    if not determine_school(school):
+        return redirect(url_for('home'))
 
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     new_post_link = url_for('new_post', school=school)
@@ -245,6 +279,9 @@ def school_page(school):
 @app.route("/<string:school>/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post(school):
+
+    if not determine_school(school):
+        return redirect(url_for('home'))
 
     if current_user.school.school_name.lower() != school:
         return redirect(url_for('school_page', school=school))
@@ -270,6 +307,10 @@ def new_post(school):
 
 @app.route("/<string:school>/post/<int:post_id>", methods=['GET', 'POST'])
 def post(school, post_id):
+    
+    if not determine_school(school):
+        return redirect(url_for('home'))
+
     school_img = url_for('static', filename='images/' + school + 'logo.png')
     form = CommentForm()
     post = Post.query.get_or_404(post_id)
@@ -293,6 +334,10 @@ def post(school, post_id):
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
 def update_post(school, post_id):
+
+    if not determine_school(school):
+        return redirect(url_for('home'))
+
     post = Post.query.get_or_404(post_id)
     school_id = get_school_id(school)
     school_n = School.query.filter(School.id==school_id).first()
@@ -317,6 +362,10 @@ def update_post(school, post_id):
 @app.route("/<string:school>/post/<int:post_id>/delete", methods=['GET', 'POST'])
 @login_required
 def delete_post(school, post_id):
+    
+    if not determine_school(school):
+        return redirect(url_for('home'))
+
     post = Post.query.get_or_404(post_id)
     comments = Comment.query.filter(Comment.post_id==post_id).all()
     if post.author != current_user:

@@ -503,3 +503,10 @@ body {
 .acc-stat-form {
     width: 60%;
 }
+
+#fof {
+    color: #fff;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+}
