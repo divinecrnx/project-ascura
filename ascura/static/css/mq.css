@@ -103,12 +103,13 @@
         padding: 10px;
     }
     #jumbo-logo-custom {
-        width: 100%;
+        width: max-content;
     }
     #jumbo-logo-custom > h1 {
         font-size: 42pt;
         margin-top: auto;
         margin-bottom: auto;
+        margin-left: 10px;
     }
     #jumbo-desc {
         width: 100%;
@@ -172,17 +173,5 @@
     .short-desc {
         margin-top: 0;
         margin-bottom: 0;
-    }
-    .modal-footer {
-        flex-direction: column-reverse;
-    }
-    .modal-footer > form {
-        width: 100%;
-    }
-    .modal-footer > form > input {
-        padding: 10px;
-    }
-    .modal-footer > button {
-        padding: 10px;
     }
 }
