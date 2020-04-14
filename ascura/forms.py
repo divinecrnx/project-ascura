@@ -265,6 +265,16 @@ class UpdateStudentAccountForm(FlaskForm):
             if user:
                 raise ValidationError('That email is taken. Please choose a different one.')
 
+class UpdateFacultyAccountForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Update account')
+
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = User.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('That email is taken. Please choose a different one.')
+
 class UpdateStudentPasswordForm(FlaskForm):
     old_password = PasswordField('Old password')
     password = PasswordField('New password')

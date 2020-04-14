@@ -102,23 +102,29 @@
         </form>
     </div>
     <div id="form-wrapper" class="mt-5 mb-5">
+    {% if current_user.role_id < 4 %}
         <form method="POST" action="{{ url_for('account_update', formtype='account') }}">
+    {% else %}
+        <form method="POST" action="{{ url_for('account_update', formtype='accountf') }}">
+    {% endif %}
             {{ form_acc.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="mb-4">Account Information</legend>
-                <div class="form-group">
-                    {{ form_acc.semester.label(class="form-control-label") }}
-                    {% if form_acc.semester.errors %}
-                        {{ form_acc.semester(class="form-control form-control-asc is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form_acc.semester.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form_acc.semester(class="form-control form-control-asc") }}
-                    {% endif %}
-                </div>
+                {% if current_user.role_id < 4 %}
+                    <div class="form-group">
+                        {{ form_acc.semester.label(class="form-control-label") }}
+                        {% if form_acc.semester.errors %}
+                            {{ form_acc.semester(class="form-control form-control-asc is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_acc.semester.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form_acc.semester(class="form-control form-control-asc") }}
+                        {% endif %}
+                    </div>
+                {% endif %}
                 <div class="form-group">
                     {{ form_acc.email.label(class="form-control-label") }}
                     {% if form_acc.email.errors %}

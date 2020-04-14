@@ -2,7 +2,7 @@ import secrets, os
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from ascura import app, db, bcrypt
-from ascura.forms import CommentForm, FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, UpdateStudentProfileForm, UpdateStudentPasswordForm, PostForm
+from ascura.forms import CommentForm, FacultyRegistrationForm, SCETRegistrationForm, SMARTRegistrationForm, SBMRegistrationForm, SHTMRegistrationForm, SAATRegistrationForm, SSSRegistrationForm, LoginForm, UpdateStudentAccountForm, UpdateFacultyAccountForm, UpdateStudentProfileForm, UpdateStudentPasswordForm, PostForm
 from ascura.models import Role, School, Course, UserType, User, Post, Comment
 from flask_login import login_user, current_user, logout_user, login_required
 from sqlalchemy import or_, and_
@@ -182,11 +182,15 @@ def save_picture(form_picture): # Resizes an uploaded profile picture
 @login_required
 def account():
     form_prof = UpdateStudentProfileForm()
-    form_acc = UpdateStudentAccountForm()
+    if current_user.role_id < 4:
+        form_acc = UpdateStudentAccountForm()
+        form_acc.email.data = current_user.email
+        form_acc.semester.data = current_user.semester
+    else:
+        form_acc = UpdateFacultyAccountForm()
+        form_acc.email.data = current_user.email
     form_pass = UpdateStudentPasswordForm()
 
-    form_acc.email.data = current_user.email
-    form_acc.semester.data = current_user.semester
     form_prof.short_desc.data = current_user.short_desc
     form_prof.long_desc.data = current_user.long_desc
     form_prof.interests.data = current_user.interests
@@ -198,7 +202,10 @@ def account():
 @login_required
 def account_update(formtype):
     form_prof = UpdateStudentProfileForm(request.form)
-    form_acc = UpdateStudentAccountForm(request.form)
+    if formtype == 'accountf':
+        form_acc = UpdateFacultyAccountForm(request.form)
+    else:
+        form_acc = UpdateStudentAccountForm(request.form)
     form_pass = UpdateStudentPasswordForm(request.form)
 
     if formtype == 'profile' and form_prof.validate_on_submit():
@@ -214,6 +221,11 @@ def account_update(formtype):
     elif formtype == 'account' and form_acc.validate_on_submit():
         current_user.email = form_acc.email.data
         current_user.semester = form_acc.semester.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('account'))
+    elif formtype == 'accountf' and form_acc.validate_on_submit():
+        current_user.email = form_acc.email.data
         db.session.commit()
         flash('Your account has been updated!', 'success')
         return redirect(url_for('account'))
@@ -236,6 +248,7 @@ def account_update(formtype):
             form_prof.long_desc.data = current_user.long_desc
             form_prof.interests.data = current_user.interests
         flash('Oops, one of the fields had an error. Scroll down to see what caused it.', 'danger')
+        print(form_acc.errors)
         image_file = url_for('static', filename='images/profile_pics/' + current_user.image_file)
         return render_template('account.html', title='Account', image_file=image_file, form_prof=form_prof, form_acc=form_acc, form_pass=form_pass)
 
