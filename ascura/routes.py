@@ -176,9 +176,9 @@ def account_update(formtype):
     form_pass = UpdateStudentPasswordForm(request.form)
 
     if formtype == 'profile' and form_prof.validate_on_submit():
-        current_user.short_desc = form_prof.short_desc.data
-        current_user.long_desc = form_prof.long_desc.data
-        current_user.interests = form_prof.interests.data
+        current_user.short_desc = form_prof.short_desc.data if len(form_prof.short_desc.data) > 0 else "No information given"
+        current_user.long_desc = form_prof.long_desc.data if len(form_prof.long_desc.data) > 0 else "No information given"
+        current_user.interests = form_prof.interests.data if len(form_prof.interests.data) > 0 else "This user has not specified any interests."
         if form_prof.picture.data:
             picture_file = save_picture(form_prof.picture.data)
             current_user.image_file = picture_file
