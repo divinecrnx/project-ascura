@@ -82,7 +82,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     short_desc = db.Column(db.String(70), nullable=False, default="Hi there, I'm new to Ascura.")
-    long_desc = db.Column(db.Text, nullable=False, default="No information given")
+    long_desc = db.Column(db.String(450), nullable=False, default="No information given")
     interests = db.Column(db.String(100), nullable=False, default="This user has not specified any interests.")
 
     school_id = db.Column(db.Integer, db.ForeignKey('school.id'), nullable=False)
