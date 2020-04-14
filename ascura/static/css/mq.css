@@ -219,4 +219,19 @@
         margin-top: 0;
         margin-bottom: 0;
     }
+    .school-grid {
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+    }
+    .school-elem {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .school-elem > img {
+        text-align: center;
+        width: 100%;
+        height: 100%;
+    }
 }
