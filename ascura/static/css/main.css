@@ -27,6 +27,10 @@ label {
     background-size: cover;
 }
 
+.test-burger {
+    display: none;
+}
+
 @font-face {
     font-family: Proxima-Bold;
     src: url(../proxima_ssv/Proxima\ Nova\ Bold.otf);

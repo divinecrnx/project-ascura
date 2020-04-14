@@ -1,10 +1,20 @@
 @media (orientation: portrait) {
+    .test-burger {
+        display: block;
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        background-color: red;
+        right: 20px;
+        top: 10px;
+    }
     #header {
-    flex-direction: column;
-    height: max-content;
+        flex-direction: column;
+        height: max-content;
+        position: relative;
     }
     #right-h-content {
-        display: block;
+        display: none;
         width: 100%;
         margin-top: 10px;
     }
