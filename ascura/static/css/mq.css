@@ -1,0 +1,89 @@
+@media (orientation: portrait) {
+    #wycd > div {
+        height: max-content;
+    }
+    .do-row {
+        width: 90%;
+        display: block;
+    }
+    .d-right-content {
+        display: none;
+    }
+    .about-div {
+        width: 90%;
+    }
+    .user-profile {
+        width: 90%;
+        display: block;
+    }
+    .user-about-left {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .user-pp {
+        text-align: center;
+    }
+    .user-about-right {
+        width: 100%;
+    }
+    .user-longdesc {
+        margin-bottom: 15px;
+        height: max-content;
+    }
+    .user-activity-tabs > div {
+        width: 100%;
+    }
+    .user-activity {
+        width: 90%;
+    }
+    .acc-top {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 90%;
+    }
+    .profile-container {
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+    }
+    .acc-stat-form {
+        width: 100%;
+    }
+    #form-wrapper {
+        width: 90%;
+    }
+    .btn {
+        width: 100%;
+    }
+    #school-wall {
+        flex-direction: column;
+        width: 90%;
+    }
+    #school-content {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .s-post {
+        width: 100%;
+    }
+    #create-post {
+        width: 100%;
+    }
+    .post-author-actions > * {
+        margin: .25rem;
+        padding: 10px;
+    }
+    .s-comment {
+        width: 100%;
+    }
+    #comments-section {
+        width: 100%;
+    }
+    .std-m {
+        width: 90%;
+    }
+    .school-elem > a {
+        padding: 10px 20px;
+    }
+}

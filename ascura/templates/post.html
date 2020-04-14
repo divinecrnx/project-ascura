@@ -16,7 +16,7 @@
                 <div class="s-post">
                     <h3 class="s-post-title">{{ post.title }}</h3>
                     {% if post.author == current_user %}
-                        <div>
+                        <div class="post-author-actions">
                             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', school=post.school.school_name|lower, post_id=post.id) }}">Update</a>
                             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
                         </div>
