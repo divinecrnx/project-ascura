@@ -102,18 +102,36 @@
             </div>
         {% endif %}
     </div>
-    {% if posts.pages > 1 %}
-        <div class="std-div user-pagination">
-            {% if page > 1 %}
-                <div class="page-previous">
-                    <a href="{{ url_for('user_page', username=user.username) }}">‹ prev</a>
-                </div>
-            {% endif %}
-            {% if page < posts.pages %}
-                <div class="page-next">
-                    <a href="{{ url_for('user_page', username=user.username) }}">next ›</a>
-                </div>    
-            {% endif %}
-        </div>
+    {% if not if_comments %}
+        {% if posts.pages > 1 %}
+            <div class="std-div user-pagination">
+                {% if p_page > 1 %}
+                    <div class="page-previous">
+                        <a href="{{ url_for('user_page', username=user.username, postpage=p_page - 1) }}">‹ prev</a>
+                    </div>
+                {% endif %}
+                {% if p_page < posts.pages %}
+                    <div class="page-next">
+                        <a href="{{ url_for('user_page', username=user.username, postpage=p_page + 1) }}">next ›</a>
+                    </div>    
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        {% if comments.pages > 1 %}
+            <div class="std-div user-pagination">
+                {% if c_page > 1 %}
+                    <div class="page-previous">
+                        <a href="{{ url_for('user_page', username=user.username, tab='comments', commentpage=c_page - 1) }}">‹ prev</a>
+                    </div>
+                {% endif %}
+                {% if c_page < comments.pages %}
+                    <div class="page-next">
+                        <a href="{{ url_for('user_page', username=user.username, tab='comments', commentpage=c_page + 1) }}">next ›</a>
+                    </div>    
+                {% endif %}
+            </div>
+        {% endif %}
     {% endif %}
+        
 {% endblock %}
