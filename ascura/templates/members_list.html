@@ -36,8 +36,7 @@
                                     <p class="short-desc">{{ member.short_desc }}</p>
                                 </div>
                                 <div class="bottom-container">
-                                    <button class="connect">Connect</button>
-                                    <!-- <button class="commend">Commend</button> -->
+                                    <a href="{{ url_for('user_page', username=member.username) }}">View Profile</a>
                                 </div>
                             </div>
                         {% endif %}
@@ -83,8 +82,7 @@
                                         <p class="short-desc">{{ member.short_desc }}</p>
                                     </div>
                                     <div class="bottom-container">
-                                        <button class="connect">Connect</button>
-                                        <!-- <button class="commend">Commend</button> -->
+                                        <a href="{{ url_for('user_page', username=member.username) }}">View Profile</a>
                                     </div>
                                 </div>
                             {% elif sem_num == 7 %}
@@ -115,8 +113,7 @@
                                                 <p class="short-desc">{{ member.short_desc }}</p>
                                             </div>
                                             <div class="bottom-container">
-                                                <button class="connect">Connect</button>
-                                                <!-- <button class="commend">Commend</button> -->
+                                                <a href="{{ url_for('user_page', username=member.username) }}">View Profile</a>
                                             </div>
                                         </div>
                                     {% endif %}
