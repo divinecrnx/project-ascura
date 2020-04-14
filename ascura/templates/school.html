@@ -7,10 +7,10 @@
             {% include './includes/_school-content.html' %}
 
             <div id="school-info">
-                {% for post in posts %}
+                {% for post in posts.items %}
                     <div class="s-post">
                         <h3><a href="{{ url_for('post', school=post.school.school_name|lower, post_id=post.id) }}">{{ post.title }}</a></h3>
-                        <small class="s-post-stat" >{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
+                        <small class="s-post-stat" >{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by <a href="{{ url_for('user_page', username=post.author.username) }}">{{ post.author.username }}</a></small>
                         <p class="s-post-c" >{{ post.content }}</p>
                         {% set comments_count = [] %}
                         {% for comment in comments %}
@@ -27,6 +27,20 @@
                         {% endif %}
                     </div>
                 {% endfor %}
+                {% if posts.pages > 1 %}
+                    <div class="std-div user-pagination">
+                        {% if page > 1 %}
+                            <div class="page-previous">
+                                <a href="{{ url_for('school_page', school=title.lower(), page=page - 1) }}">‹ prev</a>
+                            </div>
+                        {% endif %}
+                        {% if page < posts.pages %}
+                            <div class="page-next">
+                                <a href="{{ url_for('school_page', school=title.lower(), page=page + 1) }}">next ›</a>
+                            </div>    
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -228,21 +228,21 @@ def school_s_list(school):
 def school_page(school):
 
     school_img = url_for('static', filename='images/' + school + 'logo.png')
-    students_list_link = url_for('school_s_list', school=school)
     new_post_link = url_for('new_post', school=school)
     school_id = get_school_id(school)
 
+    page = request.args.get('page', 1, type=int)
+
     school_n = School.query.filter(School.id==school_id).first()
-    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
-    posts = Post.query.filter(Post.school_id==school_id).all()
+    members = User.query.filter(User.school_id==school_id).all()
+    posts = Post.query.filter(Post.school_id==school_id).order_by(Post.date_posted.desc()).paginate(page=page, per_page=10)
+    # posts = Post.query.filter(Post.school_id==school_id).all()
     comments = Comment.query.filter(Comment.school_id==school_id).all()
 
     return render_template('school.html', title=school.upper(), school_n=school_n,\
-        student_num=len(students),\
-        lecturer_num=len(lecturers),\
+        members=len(members), page=page,\
         school_img=school_img,\
-        students_list_link=students_list_link, new_post_link=new_post_link,\
+        new_post_link=new_post_link,\
         posts=posts, comments=comments)
 
 @app.route("/<string:school>/post/new", methods=['GET', 'POST'])
@@ -257,8 +257,7 @@ def new_post(school):
     school_id = get_school_id(school)
     school_n = School.query.filter(School.id==school_id).first()
 
-    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+    members = User.query.filter(User.school_id==school_id).all()
 
     form = PostForm()
     if form.validate_on_submit():
@@ -269,8 +268,7 @@ def new_post(school):
         flash('Your post has been created!', 'success')
         return redirect(url_for('school_page', school=school))
     return render_template('create_post.html', title=school.upper(), is_post=True,\
-        student_num=len(students),\
-        lecturer_num=len(lecturers),\
+        members=len(members),\
         form=form, legend=school.upper() + '- New Post', school_img=school_img, school_n=school_n)
 
 @app.route("/<string:school>/post/<int:post_id>", methods=['GET', 'POST'])
@@ -282,8 +280,7 @@ def post(school, post_id):
     school_id = get_school_id(school)
     school_n = School.query.filter(School.id==school_id).first()
     
-    students = User.query.filter(User.school_id==school_id, or_(User.role_id==1, User.role_id==2, User.role_id==3)).all()
-    lecturers = User.query.filter(User.school_id==school_id, or_(User.role_id==4, User.role_id==5, User.role_id==6)).all()
+    members = User.query.filter(User.school_id==school_id).all()
 
     if form.validate_on_submit():
         comment = Comment(content=form.content.data, author=current_user, post_id=post.id, school_id=school_id)
@@ -293,8 +290,7 @@ def post(school, post_id):
         return redirect(url_for('post', school=post.school.school_name.lower(), post_id=post.id))
 
     return render_template('post.html', is_post=True,\
-        student_num=len(students),\
-        lecturer_num=len(lecturers),\
+        members=len(members),\
         title=school.upper(), p_title=post.title, post=post, school_img=school_img, form=form, comments=comments, school_n=school_n)
 
 @app.route("/<string:school>/post/<int:post_id>/update", methods=['GET', 'POST'])

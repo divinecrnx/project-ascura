@@ -21,7 +21,7 @@
                             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
                         </div>
                     {% endif %}
-                    <small class="s-post-stat">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by {{ post.author.username }}</small>
+                    <small class="s-post-stat">{{ post.date_posted.strftime('%Y-%m-%d %H:%M') }} by <a href="{{ url_for('user_page', username=post.author.username) }}">{{ post.author.username }}</a></small>
                     <p class="s-post-c">{{ post.content }}</p>
                     {% set comments_count = [] %}
                     {% for comment in comments %}
@@ -70,7 +70,7 @@
                     {% else %}
                         {% for comment in comments %}
                             <div class="comment">
-                                <a href="#" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
+                                <a href="{{ url_for('user_page', username=comment.author.username) }}" class="comment-author-info">{{ comment.author.username }}</a><small class="s-post-stat">{{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}</small class="s-post-stat">
                                 <p class="s-post-c">{{ comment.content }}</p>
                             </div>
                         {% endfor %}
