@@ -219,7 +219,7 @@ def school_s_list(school):
     school_id = get_school_id(school)
     members = User.query.filter_by(school_id=school_id).all()
 
-    return render_template('members_list.html', members=members)
+    return render_template('members_list.html', title='Members', members=members)
 
 @app.route("/<string:school>", methods=['GET'])
 @login_required
@@ -294,6 +294,11 @@ def post(school, post_id):
 @login_required
 def update_post(school, post_id):
     post = Post.query.get_or_404(post_id)
+    school_id = get_school_id(school)
+    school_n = School.query.filter(School.id==school_id).first()
+    members = User.query.filter(User.school_id==school_id).all()
+    school_img = url_for('static', filename='images/' + school + 'logo.png')
+
     if post.author != current_user:
         abort(403)
     form = PostForm()
@@ -306,8 +311,8 @@ def update_post(school, post_id):
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-    return render_template('create_post.html', title='Update Post',
-                           form=form, legend='Update Post')
+    return render_template('create_post.html', title=school.upper(), p_title=post.title, school_n=school_n, school_img=school_img,
+                           form=form, legend='Update Post', members=len(members), is_post=True, post=post, is_update=True)
 
 @app.route("/<string:school>/post/<int:post_id>/delete", methods=['GET', 'POST'])
 @login_required

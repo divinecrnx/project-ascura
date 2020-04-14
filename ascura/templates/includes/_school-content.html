@@ -8,7 +8,11 @@
     </div>
     
     {% if current_user.school.school_name == title %}
-        {% if is_post %}
+        {% if is_post and is_update %}
+            <div id="school-p-button">
+                <a href="{{ url_for('post', school=school_n.school_name|lower, post_id=post.id) }}" class="btn btn-outline-info btn-info-asc">Back to post</a>
+            </div>
+        {% elif is_post %}
             <div id="school-p-button">
                 <a href="{{ url_for('school_page', school=school_n.school_name|lower) }}" class="btn btn-outline-info btn-info-asc">Back to posts</a>
             </div>
